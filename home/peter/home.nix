@@ -54,10 +54,14 @@ in {
 
   # git config
   programs.git = {
-    lfs.enable = true;
     enable = true;
+    lfs.enable = true;
+    # init.defaultBranch = "main";
     userName = "peturparkur";
     userEmail = "peter@nagymathe.xyz";
-    extraConfig = { core.editor = "nvim"; };
+    extraConfig = {
+      core.editor = "nvim";
+      init.defaultBranch = "main";
+    };
   };
 }
