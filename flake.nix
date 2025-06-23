@@ -1,0 +1,123 @@
+{
+  description = "NixOS configuration for x86 home nodes";
+  inputs = {
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # unstable branch -> most up-to-date
+    nixpkgs.url =
+      "github:nixos/nixpkgs/nixos-25.05"; # stable branch -> should never crash
+    nixpkgs-stable.url =
+      "github:nixos/nixpkgs/nixos-25.05"; # stable branch -> should never crash
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland.url = "github:hyprwm/Hyprland";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs =
+    { self, nixpkgs, home-manager, nixpkgs-unstable, sops-nix, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      pkgs-stable = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      # list of shared node modules
+      nodeModules = [
+        ./configuration.nix
+        ./networking.nix
+        ./kubes/k3s.nix
+        ./modules/docker.nix
+        ./modules/experimental_features.nix
+        ./users/peter
+        sops-nix.nixosModules.sops
+        ({ ... }: {
+          sops.defaultSopsFile = ./secrets/secrets.yaml;
+          sops.defaultSopsFormat = "yaml";
+        })
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.peter = import ./home/peter/home.nix;
+        }
+      ];
+    in {
+      nixosConfigurations = {
+        amdmini-1 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs self;
+            inherit pkgs;
+          };
+          modules = [ ./nodes/amdmini-1 ] ++ nodeModules;
+        };
+        amdmini-2 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs self;
+            inherit pkgs;
+          };
+          modules = [ ./nodes/amdmini-2 ] ++ nodeModules;
+        };
+        elitedesk800 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs self;
+            inherit pkgs;
+          };
+          modules = [ ./nodes/elitedesk800 ] ++ nodeModules;
+        };
+        peter-laptop = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs self;
+            inherit pkgs;
+            inherit pkgs-stable;
+            inherit unstable;
+          };
+          modules = [ ./nodes/laptop ] ++ [
+            ./configuration.nix
+            ./modules/grub.nix
+            ./modules/experimental_features.nix
+            ./users/peter
+            ./users/peter/packages.nix
+            ./users/peter/extra_packages.nix
+            # ./modules/laptop.nix # large imports of all modules and packages used by laptop
+            sops-nix.nixosModules.sops
+            ({ ... }: {
+              sops.defaultSopsFile = ./secrets/secrets.yaml;
+              sops.defaultSopsFormat = "yaml";
+              sops.age.keyFile = "/home/peter/.config/sops/age/keys.txt";
+            })
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.peter = { ... }: {
+                imports = [
+                  ./home/peter/home.nix
+                  ./home/peter/programs/vscode.nix
+                  ./home/services/megasync.nix
+                ];
+              };
+            }
+          ];
+        };
+      };
+    };
+}
