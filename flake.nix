@@ -69,7 +69,11 @@
         (nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           config.allowUnfree = true;
-          specialArgs = { inherit inputs self; };
+          specialArgs = import nixpkgs {
+            inherit system;
+            inherit inputs self;
+            config.allowUnfree = true;
+          };
           modules = [ ./nodes/${nodename} ] ++ extraModules;
         });
 
