@@ -66,15 +66,16 @@
       ];
 
       MakeNode = nodename: extraModules:
-        (nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = import nixpkgs {
-            inherit system;
-            inherit inputs self;
-            config.allowUnfree = true;
-          };
-          modules = [ ./nodes/${nodename} ] ++ extraModules;
-        });
+        (_pkgs:
+          _pkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = import _pkgs {
+              system = "x86_64-linux";
+              inherit inputs self;
+              config.allowUnfree = true;
+            };
+            modules = [ ./nodes/${nodename} ] ++ extraModules;
+          });
 
     in {
       nixosConfigurations = {
@@ -87,7 +88,7 @@
         #   };
         #   modules = [ ./nodes/amdmini-1 ] ++ nodeModules;
         # };
-        amdmini-2 = MakeNode "amdmini-2" nodeModules;
+        amdmini-2 = MakeNode "amdmini-2" nodeModules nixpkgs;
         # amdmini-2 = nixpkgs.lib.nixosSystem {
         #   system = "x86_64-linux";
         #   specialArgs = {
