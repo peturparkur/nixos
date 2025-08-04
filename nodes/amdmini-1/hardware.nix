@@ -26,7 +26,7 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/b4452a2a-666f-4609-b8a9-248243e584ee"; }];
 
-  # 2nd nvme ssd to mount
+  # 2nd nvme ssd to mount 4TB
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/3c6f6b88-f0fe-44d2-95b7-7d7dd946ee4a";
     fsType = "ext4";

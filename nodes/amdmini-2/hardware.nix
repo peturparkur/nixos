@@ -26,6 +26,12 @@
   swapDevices =
     [{ device = "/dev/disk/by-uuid/cf2d4f19-3a96-49f0-9a15-c0acd25b31d2"; }];
 
+  # 2nd nvme ssd to mount 1TB
+  fileSystems."/mnt/data" = {
+    device = "/dev/disk/by-uuid/167bcf6a-09e2-4ac4-89dd-817f5fef0ce3";
+    fsType = "ext4";
+  };
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction

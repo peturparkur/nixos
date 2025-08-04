@@ -8,7 +8,8 @@
     search = [ "tigris-bee.ts.net" ];
     networkmanager.insertNameservers = [
       "100.100.100.100" # tailscale
-      # "192.168.0.172" # localdns
+      "192.168.0.167" # localdns - technitium-tcp
+      "192.168.0.168" # localdns - technitium-udp
       "1.1.1.1"
       "8.8.8.8"
       "8.8.4.4"
@@ -68,6 +69,7 @@
   # services.xserver.libinput.enable = true;
 
   # stored in users.nix
+  # environment.sessionVariables = { LD_LIBRARY_PATH = "$NIX_LD_LIBRARY_PATH"; }; # this makes numpy work but breaks firefox
   # environment.sessionVariables = {
   #   NVIM_PROFILE = "HOME";
   #   KUBE_EDITOR = "nvim";
@@ -76,6 +78,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    fd # better find
     direnv
     wget
     curl
@@ -86,6 +89,10 @@
 
     # k3s management
     kubernetes-helm
+
+    firefox
+    tor-browser
+    mullvad-browser
 
     # archives
     zip
@@ -111,5 +118,7 @@
     # languages
     # obsidian # this should be user level
     omnisharp-roslyn
+
+    awscli2 # aws cli for s3 usage
   ];
 }
