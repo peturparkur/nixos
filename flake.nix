@@ -79,7 +79,7 @@
 
     in {
       nixosConfigurations = {
-        amdmini-1 = MakeNode "amdmini-1" nodeModules;
+        amdmini-1 = MakeNode "amdmini-1" nodeModules nixpkgs;
         # amdmini-1 = nixpkgs.lib.nixosSystem {
         #   system = "x86_64-linux";
         #   specialArgs = {
@@ -97,7 +97,7 @@
         #   };
         #   modules = [ ./nodes/amdmini-2 ] ++ nodeModules;
         # };
-        elitedesk800 = MakeNode "elitedesk800" nodeModules;
+        elitedesk800 = MakeNode "elitedesk800" nodeModules nixpkgs;
         # elitedesk800 = nixpkgs.lib.nixosSystem {
         #   system = "x86_64-linux";
         #   specialArgs = {
