@@ -4,29 +4,35 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # unstable branch -> most up-to-date
     nixpkgs.url =
       "github:nixos/nixpkgs/nixos-25.05"; # stable branch -> should never crash
-    nixpkgs-stable.url =
-      "github:nixos/nixpkgs/nixos-25.05"; # stable branch -> should never crash
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      # manages user specific programs and settings via nixos declarative setup
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "github:hyprwm/Hyprland"; # display manager - NOT USED
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     sops-nix = {
+      # secrets management - SOPS
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # distributed nixos build + deployment
+    colmena = { url = "github:zhaofengli/colmena/main"; };
   };
 
-  outputs =
-    { self, nixpkgs, home-manager, nixpkgs-unstable, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, colmena, home-manager, nixpkgs-unstable, sops-nix
+    , ... }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
+      # pkgs = import nixpkgs {
+      #   inherit system;
+      #   config.allowUnfree = true;
+      # };
+      # nixpkgs = import nixpkgs {
+      #   inherit system;
+      #   config.allowUnfree = true;
+      # };
       pkgs-stable = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
@@ -56,37 +62,42 @@
           home-manager.users.peter = import ./home/peter/home.nix;
         }
       ];
+
+      MakeNode = nodename: extraModules:
+        (_pkgs:
+          _pkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = import _pkgs {
+              system = "x86_64-linux";
+              inherit inputs self;
+              config.allowUnfree = true;
+            };
+            modules = [ ./nodes/${nodename} ] ++ extraModules;
+          });
     in {
       nixosConfigurations = {
+        # amdmini-1 = MakeNode "amdmini-1" nodeModules nixpkgs;
         amdmini-1 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs self;
-            inherit pkgs;
-          };
+          specialArgs = { inherit inputs self; };
           modules = [ ./nodes/amdmini-1 ] ++ nodeModules;
         };
+        # amdmini-2 = MakeNode "amdmini-2" nodeModules nixpkgs;
         amdmini-2 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs self;
-            inherit pkgs;
-          };
+          specialArgs = { inherit inputs self; };
           modules = [ ./nodes/amdmini-2 ] ++ nodeModules;
         };
+        # elitedesk800 = MakeNode "elitedesk800" nodeModules nixpkgs;
         elitedesk800 = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs self;
-            inherit pkgs;
-          };
+          specialArgs = { inherit inputs self; };
           modules = [ ./nodes/elitedesk800 ] ++ nodeModules;
         };
         peter-laptop = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs self;
-            inherit pkgs;
             inherit pkgs-stable;
             inherit unstable;
           };
@@ -95,9 +106,13 @@
             ./modules/grub.nix
             ./modules/experimental_features.nix
             ./users/peter
-            ./users/peter/packages.nix
-            ./users/peter/extra_packages.nix
-            # ./modules/laptop.nix # large imports of all modules and packages used by laptop
+            ({ pkgs, ... }:
+              let
+                user_pkgs = import ./users/extra_packages.nix { inherit pkgs; };
+              in {
+                config = { }
+                  // user_pkgs.enable_additional_user_packages "peter";
+              })
             sops-nix.nixosModules.sops
             ({ ... }: {
               sops.defaultSopsFile = ./secrets/secrets.yaml;

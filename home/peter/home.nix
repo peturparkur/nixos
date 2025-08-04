@@ -33,11 +33,10 @@ in {
       src = pkgs.zsh-powerlevel10k;
       file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
     }];
-    initExtra = ''
+    initContent = ''
       for file in ${sources}/*.zsh; do
               source "$file"
       done
-      complete -C aws_completer aws
     '';
     shellAliases = {
       ll = "ls -l";
@@ -54,14 +53,10 @@ in {
 
   # git config
   programs.git = {
-    enable = true;
     lfs.enable = true;
-    # init.defaultBranch = "main";
+    enable = true;
     userName = "peturparkur";
     userEmail = "peter@nagymathe.xyz";
-    extraConfig = {
-      core.editor = "nvim";
-      init.defaultBranch = "main";
-    };
+    extraConfig = { core.editor = "nvim"; };
   };
 }
