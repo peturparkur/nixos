@@ -85,7 +85,7 @@
         #   };
         #   modules = [ ./nodes/amdmini-1 ] ++ nodeModules;
         # };
-        amdmini-2 = MakeNode "amdmini-2";
+        amdmini-2 = MakeNode "amdmini-2" { extraModules = nodeModules; };
         # amdmini-2 = nixpkgs.lib.nixosSystem {
         #   system = "x86_64-linux";
         #   specialArgs = {
