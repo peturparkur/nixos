@@ -4,8 +4,6 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # unstable branch -> most up-to-date
     nixpkgs.url =
       "github:nixos/nixpkgs/nixos-25.05"; # stable branch -> should never crash
-    nixpkgs-stable.url =
-      "github:nixos/nixpkgs/nixos-25.05"; # stable branch -> should never crash
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       # manages user specific programs and settings via nixos declarative setup
@@ -76,41 +74,30 @@
             };
             modules = [ ./nodes/${nodename} ] ++ extraModules;
           });
-
     in {
       nixosConfigurations = {
-        amdmini-1 = MakeNode "amdmini-1" nodeModules nixpkgs;
-        # amdmini-1 = nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   specialArgs = {
-        #     inherit inputs self;
-        #     # inherit pkgs;
-        #   };
-        #   modules = [ ./nodes/amdmini-1 ] ++ nodeModules;
-        # };
-        amdmini-2 = MakeNode "amdmini-2" nodeModules nixpkgs;
-        # amdmini-2 = nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   specialArgs = {
-        #     inherit inputs self;
-        #     # inherit pkgs;
-        #   };
-        #   modules = [ ./nodes/amdmini-2 ] ++ nodeModules;
-        # };
-        elitedesk800 = MakeNode "elitedesk800" nodeModules nixpkgs;
-        # elitedesk800 = nixpkgs.lib.nixosSystem {
-        #   system = "x86_64-linux";
-        #   specialArgs = {
-        #     inherit inputs self;
-        #     # inherit pkgs;
-        #   };
-        #   modules = [ ./nodes/elitedesk800 ] ++ nodeModules;
-        # };
+        # amdmini-1 = MakeNode "amdmini-1" nodeModules nixpkgs;
+        amdmini-1 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs self; };
+          modules = [ ./nodes/amdmini-1 ] ++ nodeModules;
+        };
+        # amdmini-2 = MakeNode "amdmini-2" nodeModules nixpkgs;
+        amdmini-2 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs self; };
+          modules = [ ./nodes/amdmini-2 ] ++ nodeModules;
+        };
+        # elitedesk800 = MakeNode "elitedesk800" nodeModules nixpkgs;
+        elitedesk800 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs self; };
+          modules = [ ./nodes/elitedesk800 ] ++ nodeModules;
+        };
         peter-laptop = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs self;
-            # inherit pkgs;
             inherit pkgs-stable;
             inherit unstable;
           };
