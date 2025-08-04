@@ -66,7 +66,7 @@
       ];
 
       MakeNode = nodename: extraModules:
-        (inputs.nixpkgs.lib.nixosSystem {
+        (nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           config.allowUnfree = true;
           specialArgs = { inherit inputs self; };
