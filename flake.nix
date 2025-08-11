@@ -34,11 +34,8 @@
         config.allowUnfree = true;
       };
 
-      # list of shared node modules
-      nodeModules = [
+      baseModules = [
         ./configuration.nix
-        ./networking.nix
-        ./kubes/k3s.nix
         ./modules/docker.nix
         ./modules/experimental_features.nix
         ./users/peter
@@ -46,6 +43,7 @@
         ({ ... }: {
           sops.defaultSopsFile = ./secrets/secrets.yaml;
           sops.defaultSopsFormat = "yaml";
+          sops.age.keyFile = "/home/peter/.config/sops/age/keys.txt";
         })
         home-manager.nixosModules.home-manager
         {
@@ -54,6 +52,9 @@
           home-manager.users.peter = import ./home/peter/home.nix;
         }
       ];
+
+      # list of shared node modules
+      nodeModules = baseModules ++ [ ./kubes/k3s.nix ./networking.nix ];
 
       MakeNode = nodename: extraModules:
         (_pkgs:
@@ -76,11 +77,9 @@
             inherit pkgs-stable;
             inherit unstable;
           };
-          modules = [ ./nodes/laptop ] ++ [
-            ./configuration.nix
+          modules = baseModules ++ [
+            ./nodes/laptop
             ./modules/grub.nix
-            ./modules/experimental_features.nix
-            ./users/peter
             ({ pkgs, ... }:
               let
                 user_pkgs = import ./users/extra_packages.nix { inherit pkgs; };
@@ -88,16 +87,8 @@
                 config = { }
                   // user_pkgs.enable_additional_user_packages "peter";
               })
-            sops-nix.nixosModules.sops
-            ({ ... }: {
-              sops.defaultSopsFile = ./secrets/secrets.yaml;
-              sops.defaultSopsFormat = "yaml";
-              sops.age.keyFile = "/home/peter/.config/sops/age/keys.txt";
-            })
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
               home-manager.users.peter = { ... }: {
                 imports = [
                   ./home/peter/home.nix
@@ -105,7 +96,7 @@
                   ./home/services/megasync.nix
                 ];
               };
-            }
+            } # semi in
           ];
         };
       };
