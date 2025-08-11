@@ -10,8 +10,8 @@
 
   virtualisation.docker = lib.mkDefault {
     enable = true;
-    enableNvidia = false; # We manually set this
-    extraPackages = [ pkgs-stable.nvidia-docker ];
+    enableNvidia = true; # We manually set this
+    extraPackages = [ pkgs.nvidia-docker ];
     # TODO: nvidia runtime for docker -> figure out why it did not work
     # daemon.settings = {
     #   runtimes.nvidia = {
