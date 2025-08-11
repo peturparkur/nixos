@@ -8,9 +8,10 @@
 
   environment.systemPackages = [ pkgs.docker-compose ];
 
+  hardware.nvidia-container-toolkit.enable = true;
   virtualisation.docker = lib.mkDefault {
     enable = true;
-    enableNvidia = true; # We manually set this
+    # enableNvidia = true; # We manually set this
     extraPackages = [ pkgs.nvidia-docker ];
     # TODO: nvidia runtime for docker -> figure out why it did not work
     # daemon.settings = {
