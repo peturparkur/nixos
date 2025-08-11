@@ -25,14 +25,6 @@
     , ... }@inputs:
     let
       system = "x86_64-linux";
-      # pkgs = import nixpkgs {
-      #   inherit system;
-      #   config.allowUnfree = true;
-      # };
-      # nixpkgs = import nixpkgs {
-      #   inherit system;
-      #   config.allowUnfree = true;
-      # };
       pkgs-stable = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
@@ -75,6 +67,8 @@
         amdmini-1 = MakeNode "amdmini-1" nodeModules nixpkgs;
         amdmini-2 = MakeNode "amdmini-2" nodeModules nixpkgs;
         elitedesk800 = MakeNode "elitedesk800" nodeModules nixpkgs;
+
+        # this is the only custom made flake since it's not a node
         peter-laptop = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
