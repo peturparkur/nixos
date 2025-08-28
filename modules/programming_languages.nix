@@ -75,6 +75,7 @@ in {
       bash-language-server
       rust-analyzer
       pylyzer
+      clang-tools # c++/cpp cli tools
     ] ++ pythonSystemPackages ++ mypython;
 
 }
