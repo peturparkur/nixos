@@ -55,8 +55,11 @@ in {
   programs.git = {
     lfs.enable = true;
     enable = true;
-    userName = "peturparkur";
-    userEmail = "peter@nagymathe.xyz";
-    extraConfig = { core.editor = "nvim"; };
+    settings.user = {
+      name = "peturparkur";
+      email = "peter@nagymathe.xyz";
+    };
+    settings.core.editor = "nvim";
+    # extraConfig = { core.editor = "nvim"; };
   };
 }
