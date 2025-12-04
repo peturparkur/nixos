@@ -19,7 +19,7 @@ let
     # "--allowed-unsafe-sysctls=net.ipv4.conf.all.src_valid_mark,net.ipv6.conf.all.disable_ipv6"
   ];
   eth0_addresses = config.networking.interfaces.eth0.ipv4.addresses;
-  node_ip = builtins.elemAt eth0_addresses 0;
+  node_ip = (builtins.elemAt eth0_addresses 0).address;
   k3s_flags = default_flags ++ [ "--node-ip ${node_ip}" ];
 in {
   # we want our k3s to support longhorn
