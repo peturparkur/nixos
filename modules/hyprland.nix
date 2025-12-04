@@ -22,10 +22,5 @@ in {
   #
   #
 
-  environment.systemPackages = with pkgs; [
-    waybar
-    dunst
-    libnotify
-    rofi-wayland
-  ];
+  environment.systemPackages = with pkgs; [ waybar dunst libnotify rofi ];
 }
