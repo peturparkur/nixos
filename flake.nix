@@ -3,11 +3,11 @@
   inputs = {
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # unstable branch -> most up-to-date
     nixpkgs.url =
-      "github:nixos/nixpkgs/nixos-25.05"; # stable branch -> should never crash
+      "github:nixos/nixpkgs/nixos-25.11"; # stable branch -> should never crash
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       # manages user specific programs and settings via nixos declarative setup
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland"; # display manager - NOT USED

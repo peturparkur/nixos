@@ -1,6 +1,7 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
-    xwayland
-    kdePackages.xwaylandvideobridge # wayland screenshare
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      xwayland
+      # kdePackages.xwaylandvideobridge # wayland screenshare
+    ];
 }

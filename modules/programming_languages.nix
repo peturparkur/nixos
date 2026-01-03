@@ -59,7 +59,7 @@ in {
       openssl # maybe for ssl -> wss connection
       wl-clipboard # clipboard tools
       tree-sitter # this is for nvim parsing
-      dockerfile-language-server-nodejs # dockerfile language server
+      dockerfile-language-server # dockerfile language server
       docker-language-server # nvim docker LSP
       yaml-language-server # nvim LSP
       docker-compose-language-service # docker-compose language server

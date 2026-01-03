@@ -58,7 +58,7 @@ in {
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics.extraPackages = with pkgs-stable;
     [
-      vaapiVdpau # may solve wayland not working
+      libva-vdpau-driver # may solve wayland not working
     ];
 
   hardware.nvidia-container-toolkit.enable = true;
