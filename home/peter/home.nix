@@ -47,6 +47,8 @@ in {
       cd = "z";
       cdi = "zi";
       j = "just";
+      icat = "kitten icat";
+      ssh = "kitten ssh";
     };
     syntaxHighlighting.enable = true;
   };
