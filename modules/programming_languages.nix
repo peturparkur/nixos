@@ -9,6 +9,7 @@ let
       pylsp-rope
       pylsp-mypy
       debugpy
+      pytest
 
       pydocstyle
       vulture
@@ -43,6 +44,7 @@ let
   pythonSystemPackages = with pkgs; [
     pyright # another python type checker and LSP
     basedpyright # pyright++
+    pyrefly
 
     # Linters
     pylint

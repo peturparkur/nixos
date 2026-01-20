@@ -50,6 +50,8 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.peter = import ./home/peter/home.nix;
+          home-manager.sharedModules =
+            [ inputs.sops-nix.homeManagerModules.sops ];
         }
       ];
 
