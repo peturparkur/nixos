@@ -58,6 +58,7 @@ let
 in {
   environment.systemPackages = with pkgs;
     [
+      opencode # LLM CLI - Development
       openssl # maybe for ssl -> wss connection
       wl-clipboard # clipboard tools
       tree-sitter # this is for nvim parsing
@@ -78,6 +79,11 @@ in {
       rust-analyzer
       pylyzer
       clang-tools # c++/cpp cli tools
+
+      # rust things
+      rustup
+      rustfmt
+      rust-analyzer
     ] ++ pythonSystemPackages ++ mypython;
 
 }
