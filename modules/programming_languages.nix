@@ -59,6 +59,7 @@ in {
   environment.systemPackages = with pkgs;
     [
       opencode # LLM CLI - Development
+      gemini-cli # LLM CLI - Development
       openssl # maybe for ssl -> wss connection
       wl-clipboard # clipboard tools
       tree-sitter # this is for nvim parsing
