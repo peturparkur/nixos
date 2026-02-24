@@ -94,6 +94,7 @@
     # k3s management
     kubernetes-helm
 
+    # browsers - web
     firefox
     tor-browser
     mullvad-browser
@@ -122,6 +123,9 @@
     # languages
     # obsidian # this should be user level
     omnisharp-roslyn
+
+    # tooling for lsps or some apps
+    nodejs_24
 
     awscli2 # aws cli for s3 usage
   ];
