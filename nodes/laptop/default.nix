@@ -124,6 +124,9 @@
     # obsidian # this should be user level
     omnisharp-roslyn
 
+    # terminal file explorer
+    yazi
+
     # tooling for lsps or some apps
     nodejs_24
 
