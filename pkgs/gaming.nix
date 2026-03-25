@@ -14,6 +14,9 @@
   programs.steam.gamescopeSession.enable =
     true; # this solves fullscreen problems for some games; eg.: Bethesda
 
+  # enabled for wireless xbox controller connectivity
+  hardware.xpadneo.enable = true;
+
   # additional game launcher
   environment.systemPackages = with pkgs; [
     steamcmd

@@ -27,8 +27,8 @@ in {
       # xorg.libXcomposite
       # xorg.libXtst
       # xorg.libXrandr
-      # xorg.libXext
-      # xorg.libX11
+      libxext
+      libx11
       # xorg.libXfixes
       # libGL
       # libva

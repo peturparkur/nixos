@@ -25,6 +25,21 @@
 
   swapDevices = [ ];
 
+  # required for having Bluetooth connection working with Xbox Controller
+  # see issue: https://discourse.nixos.org/t/xbox-controller-stuck-in-a-disconnect-reconnect-loop/67845/4
+  hardware.bluetooth = {
+    enable = true; # enables support for Bluetooth
+    powerOnBoot = true; # powers up the default Bluetooth controller on boot
+    settings = {
+      General = {
+        Privacy = "device";
+        JustWorksRepairing = "always";
+        Class = "0x000100";
+        FastConnectable = "true";
+      };
+    };
+  };
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
