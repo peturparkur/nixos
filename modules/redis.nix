@@ -1,23 +1,23 @@
-{ config, pkgs, lib, networkTopology, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  networkTopology,
+  ...
+}:
 let
   # Automatically fetch the IP for the machine currently being evaluated
   hostName = config.networking.hostName;
   myIp = networkTopology.${hostName};
 
   # Node 1 will be our initial bootstrap master
-  initialMasterIp =
-    networkTopology.amdmini-1; # Adjust to your actual master node hostname
+  initialMasterIp = networkTopology.amdmini-1; # Adjust to your actual master node hostname
   masterName = "ha-redis-master";
   redis_server_name = "ha-redis";
   redis_sentinel_name = "ha-sentinel";
 
-in {
-
-  # 1. Inherit the IP configuration directly from our cluster map
-  # networking.interfaces.eth0.ipv4.addresses = [{
-  #   address = myIp;
-  #   prefixLength = 24; # Adjust to your specific subnet mask
-  # }];
+in
+{
 
   # 2. Secret Management
   # Define the sops secret for the Redis password
@@ -31,9 +31,7 @@ in {
   };
 
   sops.templates."sentinel-auth.conf" = {
-    content = "sentinel auth-pass ${masterName} ${
-        config.sops.placeholder."redis/password"
-      }";
+    content = "sentinel auth-pass ${masterName} ${config.sops.placeholder."redis/password"}";
     owner = config.services.redis.servers.${redis_sentinel_name}.user;
   };
 
