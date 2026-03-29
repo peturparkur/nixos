@@ -33,6 +33,11 @@
         inherit system;
         config.allowUnfree = true;
       };
+      networkTopology = {
+        elitedesk800 = "192.168.1.30";
+        amdmini-1 = "192.168.1.45";
+        amdmini-2 = "192.168.1.50";
+      };
 
       baseModules = [
         ./configuration.nix
@@ -62,7 +67,10 @@
         (_pkgs:
           _pkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            specialArgs = { inherit inputs self; };
+            specialArgs = {
+              inherit inputs self;
+              inherit networkTopology;
+            };
             modules = [ ./nodes/${nodename} ] ++ extraModules;
           });
     in {
