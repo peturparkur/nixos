@@ -77,16 +77,17 @@
     in {
       nixosConfigurations = {
         # adding graphics to amd nodes to allow amdgpu to be used by applications.
-        amdmini-1 = MakeNode "amdmini-1" nodeModules
-          ++ [ ./modules/amd_graphics.nix ] nixpkgs;
-        amdmini-2 = MakeNode "amdmini-2" nodeModules ++ [
+        amdmini-1 =
+          MakeNode "amdmini-1" (nodeModules ++ [ ./modules/amd_graphics.nix ])
+          nixpkgs;
+        amdmini-2 = MakeNode "amdmini-2" (nodeModules ++ [
           ./modules/amd_graphics.nix
           ({ ... }: {
             boot.kernelParams = [
               "amdgpu.gttsize=16384"
             ]; # Adjust based on your total RAM})] nixpkgs;
           })
-        ] nixpkgs;
+        ]) nixpkgs;
         elitedesk800 = MakeNode "elitedesk800" nodeModules nixpkgs;
 
         # this is the only custom made flake since it's not a node
