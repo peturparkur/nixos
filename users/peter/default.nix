@@ -28,7 +28,8 @@
         initialHashedPassword =
           "$y$j9T$PejWEf9rSNRTZHBUW1OfU1$/kude0HY0CKxFZPdrlcuUupfSKgX1p85oNfxb3Y7C08";
         # wheel to allow sudo
-        extraGroups = [ "wheel" "audio" "networkmanager" "docker" ];
+        extraGroups =
+          [ "wheel" "audio" "networkmanager" "docker" "video" "render" ];
         # packages = with pkgs; [ ];
 
         openssh.authorizedKeys.keys = [

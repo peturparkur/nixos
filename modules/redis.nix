@@ -15,7 +15,6 @@ let
   masterName = "ha-redis-master";
   redis_server_name = "ha-redis";
   redis_sentinel_name = "ha-sentinel";
-
 in
 {
 
