@@ -11,3 +11,10 @@ If new host is added to `.sops.yaml` or key is changed, then we will need to upd
 ```sh
 nix-shell -p sops --run "sops updatekeys secrets/example.yaml"
 ```
+
+### Reconfiguring powerlevel10k
+
+To configure powerlevel10k again, run this command to create a new configuration.
+```zsh
+POWERLEVEL9K_CONFIG_FILE=~/new-p10k.zsh p10k configure
+```
