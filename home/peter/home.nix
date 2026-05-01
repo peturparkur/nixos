@@ -62,6 +62,6 @@ in {
       email = "peter@nagymathe.xyz";
     };
     settings.core.editor = "nvim";
-    # extraConfig = { core.editor = "nvim"; };
+    settings.credential.helper = "store";
   };
 }
