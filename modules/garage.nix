@@ -22,7 +22,7 @@ in {
 
   services.garage = {
     enable = true;
-    package = pkgs.garage;
+    package = pkgs.garage_2;
     settings = {
       metadata_dir = "/var/lib/garage/meta";
       data_dir = lib.mkDefault "/mnt/data/garage";
