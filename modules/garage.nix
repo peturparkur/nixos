@@ -1,9 +1,13 @@
-{ config, pkgs, lib, networkTopology, ... }:
+{ config, pkgs, lib, networkTopology, garageNodes, ... }:
 
 let
   nodeIp = networkTopology.${config.networking.hostName};
-  otherNodes = lib.filter (ip: ip != nodeIp) (lib.attrValues networkTopology);
-  bootstrapPeers = map (ip: "${ip}:3901") otherNodes;
+  otherNodeNames = lib.filter (name: name != config.networking.hostName)
+    (lib.attrNames garageNodes);
+  bootstrapPeers =
+    map (name: "${garageNodes.${name}}@${networkTopology.${name}}:3901")
+    otherNodeNames;
+  dataDirPath = "/mnt/data/garage";
 in {
   sops.secrets."garage/rpc-secret" = {
     owner = "garage";
@@ -17,15 +21,17 @@ in {
   };
   users.groups.garage = { };
 
-  systemd.tmpfiles.rules =
-    [ "d ${config.services.garage.settings.data_dir} 0700 garage garage -" ];
+  systemd.tmpfiles.rules = [ "d ${dataDirPath} 0700 garage garage -" ];
 
   services.garage = {
     enable = true;
     package = pkgs.garage_2;
     settings = {
       metadata_dir = "/var/lib/garage/meta";
-      data_dir = lib.mkDefault "/mnt/data/garage";
+      data_dir = lib.mkDefault [{
+        path = dataDirPath;
+        capacity = "100G";
+      }];
       replication_factor = 2;
       compression_level = 12;
       rpc_bind_addr = "[::]:3901";

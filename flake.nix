@@ -39,6 +39,11 @@
         amdmini-2 = "192.168.1.50";
       };
 
+      garageNodes = {
+        amdmini-1 = "69609523a9d7939a";
+        amdmini-2 = "37f26cbac4f1ee7e";
+      };
+
       baseModules = [
         ./configuration.nix
         ./modules/docker.nix
@@ -74,7 +79,7 @@
             system = "x86_64-linux";
             specialArgs = {
               inherit inputs self;
-              inherit networkTopology;
+              inherit networkTopology garageNodes;
               nodeName = nodename;
             };
             modules = [ ./nodes/${nodename} ] ++ extraModules;
