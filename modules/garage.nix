@@ -31,7 +31,9 @@ in {
       bootstrap_peers = bootstrapPeers;
       s3_api.api_bind_addr = "[::]:3900";
       s3_api.s3_region = "garage";
+      s3_api.root_domain = ".s3.garage";
       s3_web.bind_addr = "[::]:3902";
+      s3_web.root_domain = ".web.garage";
     };
   };
 
