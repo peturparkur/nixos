@@ -4,6 +4,7 @@ let
   nodeIp = networkTopology.${config.networking.hostName};
   otherNodeNames = lib.filter (name: name != config.networking.hostName)
     (lib.attrNames garageNodes);
+  # peers should be taken from garage CLI output of `garage node id`
   bootstrapPeers =
     map (name: "${garageNodes.${name}}@${networkTopology.${name}}:3901")
     otherNodeNames;
@@ -34,6 +35,7 @@ in {
       }];
       replication_factor = 2;
       compression_level = 12;
+      block_size = "10M";
       rpc_bind_addr = "[::]:3901";
       rpc_public_addr = "${nodeIp}:3901";
       rpc_secret_file = config.sops.secrets."garage/rpc-secret".path;
