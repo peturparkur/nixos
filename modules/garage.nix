@@ -5,7 +5,10 @@ let
   otherNodes = lib.filter (ip: ip != nodeIp) (lib.attrValues networkTopology);
   bootstrapPeers = map (ip: "${ip}:3901") otherNodes;
 in {
-  sops.secrets."garage/rpc-secret" = { };
+  sops.secrets."garage/rpc-secret" = {
+    owner = "garage";
+    group = "garage";
+  };
 
   users.users.garage = {
     isSystemUser = true;
