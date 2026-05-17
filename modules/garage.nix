@@ -22,14 +22,16 @@ in {
     package = pkgs.garage;
     settings = {
       metadata_dir = "/var/lib/garage/meta";
-      data_dir = lib.mkDefault "/mnt/storage/garage";
+      data_dir = lib.mkDefault "/mnt/data/garage";
+      replication_factor = 2;
+      compression_level = 12;
       rpc_bind_addr = "[::]:3901";
       rpc_public_addr = "${nodeIp}:3901";
       rpc_secret_file = config.sops.secrets."garage/rpc-secret".path;
       bootstrap_peers = bootstrapPeers;
-      s3_api.address = "[::]:3900";
+      s3_api.api_bind_addr = "[::]:3900";
       s3_api.s3_region = "garage";
-      s3_web.address = "[::]:3902";
+      s3_web.bind_addr = "[::]:3902";
     };
   };
 
