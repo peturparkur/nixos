@@ -61,8 +61,12 @@
       ];
 
       # list of shared node modules
-      nodeModules = baseModules
-        ++ [ ./kubes/k3s.nix ./networking.nix ./modules/nats.nix ];
+      nodeModules = baseModules ++ [
+        ./kubes/k3s.nix
+        ./networking.nix
+        ./modules/nats.nix
+        ./modules/garage.nix
+      ];
 
       MakeNode = nodename: extraModules:
         (_pkgs:
