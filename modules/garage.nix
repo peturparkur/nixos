@@ -28,6 +28,7 @@ in {
       rpc_secret_file = config.sops.secrets."garage/rpc-secret".path;
       bootstrap_peers = bootstrapPeers;
       s3_api.address = "[::]:3900";
+      s3_api.s3_region = "garage";
       s3_web.address = "[::]:3902";
     };
   };
