@@ -7,6 +7,16 @@ let
 in {
   sops.secrets."garage/rpc-secret" = { };
 
+  users.users.garage = {
+    isSystemUser = true;
+    group = "garage";
+    home = "/var/lib/garage";
+  };
+  users.groups.garage = { };
+
+  systemd.tmpfiles.rules =
+    [ "d ${config.services.garage.settings.data_dir} 0700 garage garage -" ];
+
   services.garage = {
     enable = true;
     package = pkgs.garage;
@@ -21,4 +31,8 @@ in {
       s3_web.address = "[::]:3902";
     };
   };
+
+  systemd.services.garage.serviceConfig.DynamicUser = lib.mkForce false;
+  systemd.services.garage.serviceConfig.User = "garage";
+  systemd.services.garage.serviceConfig.Group = "garage";
 }
