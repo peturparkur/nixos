@@ -14,6 +14,10 @@ in {
     owner = "garage";
     group = "garage";
   };
+  sops.secrets."garage/admin-token" = {
+    owner = "garage";
+    group = "garage";
+  };
 
   users.users.garage = {
     isSystemUser = true;
@@ -21,6 +25,10 @@ in {
     home = "/var/lib/garage";
   };
   users.groups.garage = { };
+
+  environment.etc."garage.toml".group = "garage";
+  environment.etc."garage.toml".mode = "0640";
+  users.users.peter.extraGroups = [ "garage" ];
 
   systemd.tmpfiles.rules = [ "d ${dataDirPath} 0700 garage garage -" ];
 
@@ -45,6 +53,8 @@ in {
       s3_api.root_domain = ".s3.garage";
       s3_web.bind_addr = "[::]:3902";
       s3_web.root_domain = ".web.garage";
+      admin.api_bind_addr = "[::]:3903";
+      admin.admin_token_file = config.sops.secrets."garage/admin-token".path;
     };
   };
 
