@@ -40,8 +40,10 @@
       };
 
       garageNodes = {
-        amdmini-1 = "69609523a9d7939a";
-        amdmini-2 = "37f26cbac4f1ee7e";
+        amdmini-1 =
+          "69609523a9d7939a37abace4240dde12cc07a43fda2dc8cb5ce67c1931c8b818@192.168.1.45";
+        amdmini-2 =
+          "37f26cbac4f1ee7e18f89786fb473bdf1e81365421c14fea987dd8625eb44f7";
       };
 
       baseModules = [
