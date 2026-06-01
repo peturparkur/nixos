@@ -135,7 +135,7 @@
       nodejs_24
 
       awscli2 # aws cli for s3 usage
-    ] ++ [ pkgs_next.zerofs ];
+    ] ++ [ pkgs.zerofs ];
 
   # Redis instance for zerofs
   users.users.zerofs = {

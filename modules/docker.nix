@@ -20,7 +20,7 @@
     daemon.settings = {
       ipv6 = true;
       # Include Tailscale's MagicDNS resolver for tailnet domains
-      dns = [ "100.100.100.100" "1.1.1.1" "8.8.8.8" ];
+      dns = [ "1.1.1.1" "8.8.8.8" ];
       fixed-cidr-v6 = "fd00::/80";
     };
   };
