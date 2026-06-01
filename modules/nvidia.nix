@@ -7,18 +7,18 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
   '';
-in {
+in
+{
   # Nvidia specific
   nixpkgs.config.allowUnfree = true;
 
   # environment.sessionVariables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
 
-  environment.systemPackages = with pkgs;
-    [
-      # cudaPackages_12.cudatoolkit
-      # cudaPackages_12.cuda_nvcc
-      nvidia-offload
-    ];
+  environment.systemPackages = with pkgs; [
+    # cudaPackages_12.cudatoolkit
+    # cudaPackages_12.cuda_nvcc
+    nvidia-offload
+  ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -56,10 +56,9 @@ in {
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.graphics.extraPackages = with pkgs;
-    [
-      libva-vdpau-driver # may solve wayland not working
-    ];
+  hardware.graphics.extraPackages = with pkgs; [
+    libva-vdpau-driver # may solve wayland not working
+  ];
 
   hardware.nvidia-container-toolkit.enable = true;
   # see https://nixos.wiki/wiki/Nvidia#CUDA_and_using_your_GPU_for_compute

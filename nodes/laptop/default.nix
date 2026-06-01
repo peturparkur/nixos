@@ -1,7 +1,13 @@
-{ pkgs, pkgs_next, ... }: {
+{ pkgs, ... }:
+{
   services.resolved = {
     enable = true;
-    fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
+    settings = {
+      Resolve.FallbackDns = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
+    };
   };
   networking = {
     hostName = "peter-laptop"; # Define your hostname.
@@ -81,7 +87,8 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs;
+  environment.systemPackages =
+    with pkgs;
     [
       fd # better find
       direnv
@@ -135,7 +142,8 @@
       nodejs_24
 
       awscli2 # aws cli for s3 usage
-    ] ++ [ pkgs.zerofs ];
+    ]
+    ++ [ pkgs.zerofs ];
 
   # Redis instance for zerofs
   users.users.zerofs = {

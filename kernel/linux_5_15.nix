@@ -1,1 +1,4 @@
-{ pkgs, ... }: { boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15; }
+{ pkgs, ... }:
+{
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
+}

@@ -1,4 +1,11 @@
-{ config, pkgs, lib, networkTopology, nodeName, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  networkTopology,
+  nodeName,
+  ...
+}:
 let
   # NATS ports
   clientPort = 4222;
@@ -7,9 +14,9 @@ let
 
   # Build cluster routes from network topology
   # NATS ignores self-routes automatically
-  routes = lib.mapAttrsToList (name: ip: "nats://${ip}:${toString clusterPort}")
-    networkTopology;
-in {
+  routes = lib.mapAttrsToList (name: ip: "nats://${ip}:${toString clusterPort}") networkTopology;
+in
+{
   services.nats = {
     enable = true;
     serverName = nodeName;
@@ -39,5 +46,9 @@ in {
   };
 
   # Ensure firewall allows NATS ports (even if firewall is disabled, this documents the ports)
-  networking.firewall.allowedTCPPorts = [ clientPort clusterPort monitorPort ];
+  networking.firewall.allowedTCPPorts = [
+    clientPort
+    clusterPort
+    monitorPort
+  ];
 }

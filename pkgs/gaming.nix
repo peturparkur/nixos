@@ -1,18 +1,15 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall =
-      true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall =
-      true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall =
-      true; # Open ports in the firewall for Steam Local Network Game Transfers
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
   # This doesn't actually work...
   # At least I could not figure out how...
   # TODO: Figure out how this works
-  programs.steam.gamescopeSession.enable =
-    true; # this solves fullscreen problems for some games; eg.: Bethesda
+  programs.steam.gamescopeSession.enable = true; # this solves fullscreen problems for some games; eg.: Bethesda
 
   # enabled for wireless xbox controller connectivity
   hardware.xpadneo.enable = true;

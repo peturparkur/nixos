@@ -1,6 +1,10 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
 
-  environment.systemPackages = with pkgs; [ docker-compose docker-buildx ];
+  environment.systemPackages = with pkgs; [
+    docker-compose
+    docker-buildx
+  ];
 
   # Symlink docker-buildx into the CLI plugins directory so Docker Compose
   # can find it when using the Bake backend. Even though `docker buildx`
@@ -20,7 +24,10 @@
     daemon.settings = {
       ipv6 = true;
       # Include Tailscale's MagicDNS resolver for tailnet domains
-      dns = [ "1.1.1.1" "8.8.8.8" ];
+      dns = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
       fixed-cidr-v6 = "fd00::/80";
     };
   };

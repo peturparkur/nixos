@@ -1,15 +1,22 @@
-{ config, pkgs, lib, networkTopology, garageNodes, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  networkTopology,
+  garageNodes,
+  ...
+}:
 
 let
   nodeIp = networkTopology.${config.networking.hostName};
-  otherNodeNames = lib.filter (name: name != config.networking.hostName)
-    (lib.attrNames garageNodes);
+  otherNodeNames = lib.filter (name: name != config.networking.hostName) (lib.attrNames garageNodes);
   # peers should be taken from garage CLI output of `garage node id`
-  bootstrapPeers =
-    map (name: "${garageNodes.${name}}@${networkTopology.${name}}:3901")
-    otherNodeNames;
+  bootstrapPeers = map (
+    name: "${garageNodes.${name}}@${networkTopology.${name}}:3901"
+  ) otherNodeNames;
   dataDirPath = "/mnt/data/garage";
-in {
+in
+{
   sops.secrets."garage/rpc-secret" = {
     owner = "garage";
     group = "garage";
@@ -37,10 +44,12 @@ in {
     package = pkgs.garage_2;
     settings = {
       metadata_dir = "/var/lib/garage/meta";
-      data_dir = lib.mkDefault [{
-        path = dataDirPath;
-        capacity = "100G";
-      }];
+      data_dir = lib.mkDefault [
+        {
+          path = dataDirPath;
+          capacity = "100G";
+        }
+      ];
       replication_factor = 2;
       compression_level = 12;
       block_size = "10M";

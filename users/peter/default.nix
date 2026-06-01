@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.zsh.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -6,15 +7,20 @@
     NVIM_PROFILE = "HOME";
     KUBE_EDITOR = "nvim";
   };
-  programs = { neovim = { defaultEditor = true; }; };
+  programs = {
+    neovim = {
+      defaultEditor = true;
+    };
+  };
 
   users = {
     defaultUserShell = pkgs.zsh;
-    groups = { peter = { }; };
+    groups = {
+      peter = { };
+    };
     users = {
       root = {
-        initialHashedPassword =
-          "$y$j9T$PejWEf9rSNRTZHBUW1OfU1$/kude0HY0CKxFZPdrlcuUupfSKgX1p85oNfxb3Y7C08";
+        initialHashedPassword = "$y$j9T$PejWEf9rSNRTZHBUW1OfU1$/kude0HY0CKxFZPdrlcuUupfSKgX1p85oNfxb3Y7C08";
       };
       peter = {
         name = "peter";
@@ -25,11 +31,16 @@
         createHome = true;
         useDefaultShell = true;
         # hashed password can be generated with mkpasswd
-        initialHashedPassword =
-          "$y$j9T$PejWEf9rSNRTZHBUW1OfU1$/kude0HY0CKxFZPdrlcuUupfSKgX1p85oNfxb3Y7C08";
+        initialHashedPassword = "$y$j9T$PejWEf9rSNRTZHBUW1OfU1$/kude0HY0CKxFZPdrlcuUupfSKgX1p85oNfxb3Y7C08";
         # wheel to allow sudo
-        extraGroups =
-          [ "wheel" "audio" "networkmanager" "docker" "video" "render" ];
+        extraGroups = [
+          "wheel"
+          "audio"
+          "networkmanager"
+          "docker"
+          "video"
+          "render"
+        ];
         # packages = with pkgs; [ ];
 
         openssh.authorizedKeys.keys = [

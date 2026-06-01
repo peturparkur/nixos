@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   nixpkgs.config.allowUnfree = true;
   imports = [
     # Include the results of the hardware scan.
@@ -15,8 +16,7 @@
     # enableNvidia = true; # We manually set this
     # extraPackages = [ pkgs.nvidia-docker ];
     daemon.settings = {
-      features.cdi =
-        true; # does not work on docker-compose but works on docker :(
+      features.cdi = true; # does not work on docker-compose but works on docker :(
       # error message: services.testing.deploy.resources.reservations.devices.0 capabilities is required
       experimental = true;
     };

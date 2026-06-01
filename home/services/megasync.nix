@@ -1,1 +1,4 @@
-{ ... }: { services.megasync.enable = true; }
+{ ... }:
+{
+  services.megasync.enable = true;
+}

@@ -21,7 +21,8 @@ let
   eth0_addresses = config.networking.interfaces.eth0.ipv4.addresses;
   node_ip = (builtins.elemAt eth0_addresses 0).address;
   k3s_flags = default_flags ++ [ "--node-ip ${node_ip}" ];
-in {
+in
+{
   # we want our k3s to support longhorn
   imports = [ ./longhorn.nix ];
 

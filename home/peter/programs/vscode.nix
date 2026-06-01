@@ -1,4 +1,5 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   # I had to add this because of vscode???
   # Package ‘vscode-1.88.0’
   # WHY???
@@ -53,7 +54,10 @@
         "doppler.autocomplete.enable" = true;
         "doppler.hover.enable" = true;
 
-        "isort.args" = [ "--profile" "black" ];
+        "isort.args" = [
+          "--profile"
+          "black"
+        ];
 
         "[nix]" = {
           "editor.defaultFormatter" = "kamadorueda.alejandra";
@@ -72,14 +76,18 @@
         "window.zoomLevel" = 0.0;
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = "nil";
-        "vs-kubernetes" = { "vs-kubernetes.crd-code-completion" = "enabled"; };
+        "vs-kubernetes" = {
+          "vs-kubernetes.crd-code-completion" = "enabled";
+        };
         "terminal.integrated.cwd" = "\${workspaceFolder}";
         "update.mode" = "none";
         "terminal.integrated.sendKeybindingsToShell" = true;
         "terminal.integrated.fontSize" = 14;
         "terminal.explorerKind" = "external";
         "terminal.integrated.enableMultiLinePasteWarning" = false;
-        "gopls" = { "ui.semanticTokens" = true; };
+        "gopls" = {
+          "ui.semanticTokens" = true;
+        };
 
         # PYTHON
         "[python]" = {

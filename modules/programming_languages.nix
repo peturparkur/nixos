@@ -2,8 +2,8 @@
 let
 
   # general python packages used by tools
-  pythonPackages = ps:
-    with ps; [
+  pythonPackages =
+    ps: with ps; [
       python-lsp-server # python lsp
       python-lsp-ruff # linter
       pylsp-rope
@@ -18,8 +18,8 @@ let
     ];
 
   # general python packages used day-to-day
-  additionalPythonPackages = ps:
-    with ps; [
+  additionalPythonPackages =
+    ps: with ps; [
       ipykernel # jupter notebook kernel
       jupyter
       ipython
@@ -53,10 +53,12 @@ let
     poetry
   ];
 
-  mypython = with pkgs; [ (python312.withPackages allPythonPackages) ];
+  mypython = with pkgs; [ (python314.withPackages allPythonPackages) ];
 
-in {
-  environment.systemPackages = with pkgs;
+in
+{
+  environment.systemPackages =
+    with pkgs;
     [
       opencode # LLM CLI - Development
       gemini-cli # LLM CLI - Development
@@ -73,7 +75,7 @@ in {
       dotnet-sdk_8
       csharp-ls # csharp lsp
       nixd # nix language server
-      nixfmt-classic # nix formatter -> nixfmt
+      nixfmt # nix formatter -> nixfmt
       nil # nix language server
       lua-language-server
       bash-language-server
@@ -85,6 +87,8 @@ in {
       rustup
       rustfmt
       rust-analyzer
-    ] ++ pythonSystemPackages ++ mypython;
+    ]
+    ++ pythonSystemPackages
+    ++ mypython;
 
 }

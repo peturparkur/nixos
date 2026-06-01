@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   programs = {
     # Version control application.
     git = {

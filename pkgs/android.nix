@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   allow_android_packages_user = myuser: {
     programs.adb.enable = true;
     users.users.${myuser}.extraGroups = [ "adbusers" ];

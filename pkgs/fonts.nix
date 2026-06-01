@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   # Unused for now
   fonts.packages = with pkgs; [
     fira-code

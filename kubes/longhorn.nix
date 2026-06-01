@@ -1,6 +1,11 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   # longhorn support
-  environment.systemPackages = with pkgs; [ openiscsi nfs-utils ipset ];
+  environment.systemPackages = with pkgs; [
+    openiscsi
+    nfs-utils
+    ipset
+  ];
   services.openiscsi = {
     enable = true;
     name = "${config.networking.hostName}";

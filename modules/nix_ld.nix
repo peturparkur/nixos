@@ -1,11 +1,16 @@
 { pkgs, ... }:
-let steam_pkgs = (pkgs.steam-run.args.multiPkgs pkgs);
-in {
+let
+  steam_pkgs = (pkgs.steam-run.args.multiPkgs pkgs);
+in
+{
   # https://github.com/Mic92/nix-ld
-  programs.nix-ld = { enable = true; };
+  programs.nix-ld = {
+    enable = true;
+  };
   # programs.nix-ld.libraries = (pkgs.steam-run.args.multiPkgs pkgs)
   #   ++ [ pkgs.stdenv.cc.cc pkgs.zlib pkgs.libgcc pkgs.umu-launcher];
-  programs.nix-ld.libraries = with pkgs;
+  programs.nix-ld.libraries =
+    with pkgs;
     [
       # List by default
       zlib
@@ -56,13 +61,13 @@ in {
       # glibc_multi.bin # Seems to cause issue in ARM
 
       # # Without these it silently fails
-      xorg.libXinerama
-      xorg.libXcursor
-      xorg.libXrender
-      xorg.libXScrnSaver
-      xorg.libXi
-      xorg.libSM
-      xorg.libICE
+      libxinerama
+      libxcursor
+      libxrender
+      libxscrnsaver
+      libxi
+      libsm
+      libice
       gnome2.GConf
       nspr
       nss
@@ -88,13 +93,13 @@ in {
       # other issue: (Unity:377230): GLib-GIO-CRITICAL **: 21:09:04.706: g_dbus_proxy_call_sync_internal: assertion 'G_IS_DBUS_PROXY (proxy)' failed
 
       # Verified games requirements
-      xorg.libXt
-      xorg.libXmu
+      libxt
+      libxmu
       libogg
       libvorbis
       SDL
       SDL2_image
-      glew110
+      glew_1_10
       libidn
       tbb
 
@@ -141,6 +146,7 @@ in {
       # For natron
       # libxcrypt-legacy
       # libGLU
-    ] ++ steam_pkgs;
+    ]
+    ++ steam_pkgs;
 
 }

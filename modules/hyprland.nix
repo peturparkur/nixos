@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 let
-in {
+in
+{
   programs.hyprland = {
     enable = true;
     xwayland.enable = true; # jetbrains needs it, spotify and so on
@@ -22,5 +23,10 @@ in {
   #
   #
 
-  environment.systemPackages = with pkgs; [ waybar dunst libnotify rofi ];
+  environment.systemPackages = with pkgs; [
+    waybar
+    dunst
+    libnotify
+    rofi
+  ];
 }

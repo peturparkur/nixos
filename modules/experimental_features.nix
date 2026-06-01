@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   # to allow nix flake update
   nix = {
     package = pkgs.nixVersions.stable;

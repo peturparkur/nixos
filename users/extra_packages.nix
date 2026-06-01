@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   enable_additional_user_packages = myuser: {
     # enable usual additional package for user
     users.users.${myuser}.packages = with pkgs; [

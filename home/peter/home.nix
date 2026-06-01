@@ -1,6 +1,8 @@
 { lib, pkgs, ... }:
-let sources = ../dotfiles;
-in {
+let
+  sources = ../dotfiles;
+in
+{
   imports = [
     # Include the results of the hardware scan.
     # ./files/kubeconfig.nix
@@ -26,13 +28,19 @@ in {
     historySubstringSearch.enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "kubectl" "docker-compose" ];
+      plugins = [
+        "git"
+        "kubectl"
+        "docker-compose"
+      ];
     };
-    plugins = [{
-      name = "powerlevel10k";
-      src = pkgs.zsh-powerlevel10k;
-      file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-    }];
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+    ];
     initContent = ''
       for file in ${sources}/*.zsh; do
               source "$file"
