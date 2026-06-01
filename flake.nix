@@ -4,6 +4,7 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # unstable branch -> most up-to-date
     nixpkgs.url =
       "github:nixos/nixpkgs/nixos-25.11"; # stable branch -> should never crash
+    nixpkgs-next.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       # manages user specific programs and settings via nixos declarative setup
@@ -21,15 +22,11 @@
     colmena = { url = "github:zhaofengli/colmena/main"; };
   };
 
-  outputs = { self, nixpkgs, colmena, home-manager, nixpkgs-unstable, sops-nix
-    , ... }@inputs:
+  outputs = { self, nixpkgs, colmena, home-manager, nixpkgs-next, sops-nix, ...
+    }@inputs:
     let
       system = "x86_64-linux";
-      pkgs-stable = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      unstable = import nixpkgs-unstable {
+      pkgs_next = import nixpkgs-next {
         inherit system;
         config.allowUnfree = true;
       };
@@ -104,8 +101,7 @@
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs self;
-            inherit pkgs-stable;
-            inherit unstable;
+            inherit pkgs_next;
           };
           modules = baseModules ++ [
             ./nodes/laptop

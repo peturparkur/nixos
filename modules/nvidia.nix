@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, ... }:
+{ config, pkgs, ... }:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -56,7 +56,7 @@ in {
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.graphics.extraPackages = with pkgs-stable;
+  hardware.graphics.extraPackages = with pkgs;
     [
       libva-vdpau-driver # may solve wayland not working
     ];

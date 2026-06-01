@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, ... }: {
+{ ... }: {
   hardware.graphics = {
     enable = true;
     # enable32Bit = true; # only really required for gaming
