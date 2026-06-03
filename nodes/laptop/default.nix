@@ -50,7 +50,6 @@
     ../../modules/weird/skip_network_manager.nix
     ../../services/syncthing.nix
     ../../services/mullvad.nix
-    ../../pkgs/tailscale.nix
     ../../pkgs/jujutsu.nix
     ../../pkgs/gaming.nix
     ../../pkgs/fonts.nix

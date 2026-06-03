@@ -49,10 +49,16 @@
         amdmini-2 = "37f26cbac4f1ee7e18f89786fb473bdf1e81365421c14fea987dd8625eb44f7";
       };
 
+      tailscaleNodes = {
+        peter-laptop = "tailscale/laptop";
+        amdmini-2 = "tailscale/amdmini-2";
+      };
+
       baseModules = [
         ./configuration.nix
         ./modules/docker.nix
         ./modules/experimental_features.nix
+        ./pkgs/tailscale.nix
         ./users/peter
         sops-nix.nixosModules.sops
         (
@@ -87,7 +93,7 @@
             system = "x86_64-linux";
             specialArgs = {
               inherit inputs self;
-              inherit networkTopology garageNodes;
+              inherit networkTopology garageNodes tailscaleNodes;
               nodeName = nodename;
             };
             modules = [ ./nodes/${nodename} ] ++ extraModules;
@@ -127,6 +133,7 @@
           specialArgs = {
             inherit inputs self;
             inherit pkgs_next;
+            inherit tailscaleNodes;
           };
           modules = baseModules ++ [
             ./nodes/laptop
