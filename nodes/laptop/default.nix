@@ -86,73 +86,58 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages =
-    with pkgs;
-    [
-      fd # better find
-      direnv
-      wget
-      curl
-      lshw
-      git
-      neovim
-      claude-code
-      jq # json query - cli processor
-      s5cmd # s3 cli
+  environment.systemPackages = with pkgs; [
+    fd # better find
+    direnv
+    wget
+    curl
+    lshw
+    git
+    neovim
+    claude-code
+    jq # json query - cli processor
+    s5cmd # s3 cli
 
-      # k3s management
-      kubernetes-helm
-      garage-webui
+    # k3s management
+    kubernetes-helm
+    garage-webui
 
-      # browsers - web
-      firefox
-      tor-browser
-      mullvad-browser
+    # browsers - web
+    firefox
+    tor-browser
+    mullvad-browser
 
-      # archives
-      zip
-      unzip
-      p7zip
-      zstd
-      zstd
+    # archives
+    zip
+    unzip
+    p7zip
+    zstd
+    zstd
 
-      # networking
-      mtr
-      iperf3 # measure TCP and UDP bandwidth performance
-      nmap # network discoverability and security audit
-      ldns # replacement for dig. Command is drill
+    # networking
+    mtr
+    iperf3 # measure TCP and UDP bandwidth performance
+    nmap # network discoverability and security audit
+    ldns # replacement for dig. Command is drill
 
-      # tailscale
-      # tailscale-systray
-      ripgrep
-      just
-      libgcc # for general c compilation
-      gccgo13 # gcc-13
-      vscode # temporary
-      unrar
-      # languages
-      # obsidian # this should be user level
-      omnisharp-roslyn
+    # tailscale
+    # tailscale-systray
+    ripgrep
+    just
+    libgcc # for general c compilation
+    gccgo13 # gcc-13
+    vscode # temporary
+    unrar
+    # languages
+    # obsidian # this should be user level
+    omnisharp-roslyn
 
-      # terminal file explorer
-      yazi
+    # terminal file explorer
+    yazi
 
-      # tooling for lsps or some apps
-      nodejs_24
+    # tooling for lsps or some apps
+    nodejs_24
 
-      awscli2 # aws cli for s3 usage
-    ]
-    ++ [ pkgs.zerofs ];
-
-  # Redis instance for zerofs
-  users.users.zerofs = {
-    isSystemUser = true;
-    group = "zerofs";
-  };
-  users.groups.zerofs = { };
-  services.redis.servers.zerofs = {
-    user = "zerofs";
-    enable = true;
-    port = 6380;
-  };
+    awscli2 # aws cli for s3 usage
+  ];
 }

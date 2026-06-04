@@ -60,6 +60,7 @@
         ./modules/experimental_features.nix
         ./pkgs/tailscale.nix
         ./users/peter
+        ./pkgs/zerofs.nix # testing for remote filesystem
         sops-nix.nixosModules.sops
         (
           { ... }:
