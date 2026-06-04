@@ -60,7 +60,7 @@
         ./modules/experimental_features.nix
         ./pkgs/tailscale.nix
         ./users/peter
-        ./pkgs/zerofs.nix # testing for remote filesystem
+        ./modules/zerofs.nix
         sops-nix.nixosModules.sops
         (
           { ... }:
@@ -116,9 +116,11 @@
           ++ [
             ./modules/amd_graphics.nix
             ./modules/garage.nix
+            ./services/zerofs.nix
             (
               { ... }:
               {
+                services.zerofs.enable = true;
                 boot.kernelParams = [
                   "amdgpu.gttsize=16384"
                 ]; # Adjust based on your total RAM})] nixpkgs;
