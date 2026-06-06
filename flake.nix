@@ -141,10 +141,16 @@
             (
               { ... }:
               {
-                services.zerofs.enable = true;
-                boot.kernelParams = [
-                  "amdgpu.gttsize=16384"
-                ]; # Adjust based on your total RAM})] nixpkgs;
+                services.zerofs = {
+                  enable = true;
+                  cache.memorySizeGb = 8.0;
+                  cache.diskSizeGb = 10.0;
+                };
+
+                # this would allocate more RAM to iGPU
+                # boot.kernelParams = [
+                #   "amdgpu.gttsize=16384"
+                # ]; # Adjust based on your total RAM})] nixpkgs;
               }
             )
           ]
