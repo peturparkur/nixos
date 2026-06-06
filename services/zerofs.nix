@@ -21,7 +21,7 @@
 
     filesystem = {
       maxSizeGb = 100.0;
-      compression = "zstd-11";
+      compression = "zstd-11"; # usual choices are 3, 5, 11
     };
 
     telemetry.enabled = false;

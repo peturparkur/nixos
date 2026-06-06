@@ -61,6 +61,7 @@
         ./pkgs/tailscale.nix
         ./users/peter
         ./modules/zerofs.nix
+        ./modules/virtual-filesystem.nix
         sops-nix.nixosModules.sops
         (
           { ... }:
@@ -68,6 +69,25 @@
             sops.defaultSopsFile = ./secrets/secrets.yaml;
             sops.defaultSopsFormat = "yaml";
             sops.age.keyFile = "/home/peter/.config/sops/age/keys.txt";
+          }
+        )
+        (
+          { ... }:
+          {
+            services.virtualFs = {
+              enable = true;
+              mounts.zerofs = {
+                protocol = "9p";
+                server = "192.168.1.50";
+                port = 5564;
+                mountPoint = "/mnt/zerofs";
+                options = [
+                  "version=9p2000.L"
+                  "cache=mmap"
+                  "access=user"
+                ];
+              };
+            };
           }
         )
         home-manager.nixosModules.home-manager
