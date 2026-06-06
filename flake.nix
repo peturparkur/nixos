@@ -62,6 +62,7 @@
         ./users/peter
         ./modules/zerofs.nix
         ./modules/virtual-filesystem.nix
+        ./modules/network-hosts.nix
         sops-nix.nixosModules.sops
         (
           { ... }:
@@ -156,7 +157,7 @@
           specialArgs = {
             inherit inputs self;
             inherit pkgs_next;
-            inherit tailscaleNodes;
+            inherit networkTopology tailscaleNodes;
           };
           modules = baseModules ++ [
             ./nodes/laptop
