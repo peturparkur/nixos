@@ -54,6 +54,20 @@ let
           are added automatically.
         '';
       };
+
+      automount = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = ''
+          Use systemd automount for this mount.
+          Recommended for network filesystems because it defers
+          mounting until the path is first accessed, retries on
+          transient failures, and avoids blocking boot if the
+          server is unreachable.
+        '';
+      };
+
+
     };
   };
 
@@ -80,7 +94,10 @@ let
     else
       [ "_netdev" "trans=tcp" "port=${toString (getPort mount)}" ];
 
-  getAllOptions = mount: (getDefaultOptions mount) ++ mount.options;
+  getAutomountOptions = mount:
+    if mount.automount then [ "noauto" "x-systemd.automount" ] else [ ];
+
+  getAllOptions = mount: (getDefaultOptions mount) ++ mount.options ++ (getAutomountOptions mount);
 
   has9pMount = lib.any (m: m.protocol == "9p") (lib.attrValues cfg.mounts);
 in
