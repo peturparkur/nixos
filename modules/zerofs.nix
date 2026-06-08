@@ -219,6 +219,14 @@ in
     };
     users.groups.${cfg.group} = { };
 
+    nixpkgs.overlays = lib.optional cfg.servers.webui.enable (
+      final: prev: {
+        zerofs = prev.zerofs.overrideAttrs (oldAttrs: {
+          cargoBuildFeatures = (oldAttrs.cargoBuildFeatures or []) ++ [ "webui" ];
+        });
+      }
+    );
+
     services.redis.servers.zerofs = {
       user = cfg.user;
       enable = true;

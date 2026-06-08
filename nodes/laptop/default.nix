@@ -139,5 +139,7 @@
     nodejs_24
 
     awscli2 # aws cli for s3 usage
+
+    zerofs # CLI for ZeroFS
   ];
 }
