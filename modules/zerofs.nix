@@ -219,14 +219,23 @@ in
     };
     users.groups.${cfg.group} = { };
 
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "dragonflydb" ];
-
-    services.dragonflydb = {
-      enable = true;
+    services.redis.servers.zerofs = {
       user = cfg.user;
+      enable = true;
       port = 6380;
-      bind = "127.0.0.1";
     };
+
+    # TODO: dragonflydb is currently unbuildable in nixos-26.05 due to
+    # upstream source/submodule hash drift and abseil-cpp patch mismatch.
+    # Re-enable once the nixpkgs package is fixed upstream.
+    # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "dragonflydb" ];
+    #
+    # services.dragonflydb = {
+    #   enable = true;
+    #   user = cfg.user;
+    #   port = 6380;
+    #   bind = "127.0.0.1";
+    # };
 
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0750 ${cfg.user} ${cfg.group} -"
@@ -306,9 +315,9 @@ in
       description = "ZeroFS distributed filesystem";
       after = [
         "network.target"
-        "dragonflydb.service"
+        "redis-zerofs.service"
       ];
-      wants = [ "dragonflydb.service" ];
+      wants = [ "redis-zerofs.service" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
