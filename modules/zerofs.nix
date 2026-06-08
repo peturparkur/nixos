@@ -2,20 +2,13 @@
   config,
   lib,
   pkgs,
-  pkgs_next ? pkgs,
   ...
 }:
 
 let
   cfg = config.services.zerofs;
   tomlFormat = pkgs.formats.toml { };
-  zerofsPkg =
-    if cfg.servers.webui.enable then
-      pkgs_next.zerofs.overrideAttrs (oldAttrs: {
-        cargoBuildFeatures = (oldAttrs.cargoBuildFeatures or [ ]) ++ [ "webui" ];
-      })
-    else
-      pkgs.zerofs;
+  zerofsPkg = pkgs.zerofs;
 in
 {
   options.services.zerofs = {
