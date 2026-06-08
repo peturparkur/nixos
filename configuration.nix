@@ -16,6 +16,20 @@
     ./modules/locale_gb.nix
   ];
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      dragonflydb = prev.dragonflydb.overrideAttrs (oldAttrs: {
+        src = prev.fetchFromGitHub {
+          owner = "dragonflydb";
+          repo = "dragonfly";
+          tag = "v1.34.2";
+          hash = "sha256-wFmf/3WSq9qhIf1wGDeOX4IplAjiC4avdZH3JwweQS8=";
+          fetchSubmodules = true;
+        };
+      });
+    })
+  ];
+
   boot.loader = lib.mkDefault {
     efi.canTouchEfiVariables = true;
     systemd-boot.enable = true;
