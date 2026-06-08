@@ -172,7 +172,7 @@ in
     telemetry = {
       enabled = lib.mkOption {
         type = lib.types.bool;
-        default = true;
+        default = false;
         description = "Enable anonymous telemetry.";
       };
     };
@@ -219,16 +219,19 @@ in
     };
     users.groups.${cfg.group} = { };
 
+    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "dragonflydb" ];
+
+    services.dragonflydb = {
+      enable = true;
+      user = cfg.user;
+      port = 6380;
+      bind = "127.0.0.1";
+    };
+
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0750 ${cfg.user} ${cfg.group} -"
       "d ${cfg.cache.dir} 0750 ${cfg.user} ${cfg.group} -"
     ];
-
-    services.redis.servers.zerofs = {
-      user = cfg.user;
-      enable = true;
-      port = 6380;
-    };
 
     environment.systemPackages = [ cfg.package ];
 
@@ -303,9 +306,9 @@ in
       description = "ZeroFS distributed filesystem";
       after = [
         "network.target"
-        "redis-zerofs.service"
+        "dragonflydb.service"
       ];
-      wants = [ "redis-zerofs.service" ];
+      wants = [ "dragonflydb.service" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {

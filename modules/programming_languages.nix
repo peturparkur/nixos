@@ -83,6 +83,8 @@ in
       pylyzer
       clang-tools # c++/cpp cli tools
 
+      duckdb # duckdb cli
+
       # rust things
       rustup
       rustfmt
