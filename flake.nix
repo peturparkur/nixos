@@ -114,7 +114,7 @@
           _pkgs.lib.nixosSystem {
             system = "x86_64-linux";
             specialArgs = {
-              inherit inputs self;
+              inherit inputs self pkgs_next;
               inherit networkTopology garageNodes tailscaleNodes;
               nodeName = nodename;
             };

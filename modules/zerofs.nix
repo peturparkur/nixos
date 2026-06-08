@@ -2,12 +2,20 @@
   config,
   lib,
   pkgs,
+  pkgs_next ? pkgs,
   ...
 }:
 
 let
   cfg = config.services.zerofs;
   tomlFormat = pkgs.formats.toml { };
+  zerofsPkg =
+    if cfg.servers.webui.enable then
+      pkgs_next.zerofs.overrideAttrs (oldAttrs: {
+        cargoBuildFeatures = (oldAttrs.cargoBuildFeatures or [ ]) ++ [ "webui" ];
+      })
+    else
+      pkgs.zerofs;
 in
 {
   options.services.zerofs = {
@@ -219,13 +227,7 @@ in
     };
     users.groups.${cfg.group} = { };
 
-    nixpkgs.overlays = lib.optional cfg.servers.webui.enable (
-      final: prev: {
-        zerofs = prev.zerofs.overrideAttrs (oldAttrs: {
-          cargoBuildFeatures = (oldAttrs.cargoBuildFeatures or []) ++ [ "webui" ];
-        });
-      }
-    );
+    services.zerofs.package = lib.mkDefault zerofsPkg;
 
     services.redis.servers.zerofs = {
       user = cfg.user;
@@ -250,7 +252,7 @@ in
       "d ${cfg.cache.dir} 0750 ${cfg.user} ${cfg.group} -"
     ];
 
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [ zerofsPkg ];
 
     environment.etc."zerofs.toml".source = tomlFormat.generate "zerofs.toml" ({
       cache = {
@@ -341,7 +343,7 @@ in
           export AWS_ACCESS_KEY_ID=$(cat ${cfg.accessKeyIdFile})
           export AWS_SECRET_ACCESS_KEY=$(cat ${cfg.secretAccessKeyFile})
           export HOME=${cfg.dataDir}
-          exec ${cfg.package}/bin/zerofs run -c /etc/zerofs.toml
+          exec ${zerofsPkg}/bin/zerofs run -c /etc/zerofs.toml
         '';
       };
     };
