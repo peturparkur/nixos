@@ -188,7 +188,7 @@
               {
                 services.virtualFs = {
                   enable = true;
-                  mounts.zerofs = {
+                  mounts.backblaze = {
                     protocol = "9p";
                     server = "192.168.1.50";
                     port = 5565;
