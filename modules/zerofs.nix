@@ -247,7 +247,6 @@ in
           ${cfg.user} = {
             isSystemUser = true;
             group = cfg.group;
-            home = cfg.dataDir;
           };
         }
       ) config.services.zerofs
