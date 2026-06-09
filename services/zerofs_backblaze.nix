@@ -2,7 +2,6 @@
 {
   services.zerofs.backblaze = {
     enable = lib.mkDefault false;
-    dataDir = "/var/lib/zerofs-backblaze";
 
     redis = {
       enable = true;
