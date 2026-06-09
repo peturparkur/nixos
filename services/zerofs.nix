@@ -1,7 +1,15 @@
 { config, lib, ... }:
 {
-  services.zerofs = {
+  services.zerofs.garage = {
     enable = lib.mkDefault false;
+    dataDir = "/var/lib/zerofs";
+
+    redis = {
+      enable = true;
+      serverName = "zerofs";
+      port = 6380;
+    };
+
     storage.url = "s3://zerofs/zerofs-data";
 
     servers = {

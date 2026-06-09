@@ -138,13 +138,19 @@
             ./modules/amd_graphics.nix
             ./modules/garage.nix
             ./services/zerofs.nix
+            ./services/zerofs_backblaze.nix
             (
               { ... }:
               {
-                services.zerofs = {
+                services.zerofs.garage = {
                   enable = true;
                   cache.memorySizeGb = 8.0;
                   cache.diskSizeGb = 10.0;
+                };
+                services.zerofs.backblaze = {
+                  enable = true;
+                  cache.memorySizeGb = 2.0;
+                  cache.diskSizeGb = 2.0;
                 };
 
                 # this would allocate more RAM to iGPU
@@ -175,6 +181,25 @@
               in
               {
                 config = { } // user_pkgs.enable_additional_user_packages "peter";
+              }
+            )
+            (
+              { ... }:
+              {
+                services.virtualFs = {
+                  enable = true;
+                  mounts.zerofs = {
+                    protocol = "9p";
+                    server = "192.168.1.50";
+                    port = 5565;
+                    mountPoint = "/mnt/backblaze";
+                    options = [
+                      "version=9p2000.L"
+                      "cache=mmap"
+                      "access=user"
+                    ];
+                  };
+                };
               }
             )
             home-manager.nixosModules.home-manager
