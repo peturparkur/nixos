@@ -34,7 +34,7 @@ Hunk #1 FAILED at 28.
 
 ## zerofs (webui feature)
 
-**Status:** Stable `zerofs` (1.1.7) is used without the `webui` feature. The `[servers.webui]` config section is still generated in `/etc/zerofs.toml`, but the binary ignores it. The `zerofs` CLI (e.g. `zerofs monitor`) works fine.
+**Status:** Stable `zerofs` (1.1.7) is used without the `webui` feature. The `[servers.webui]` config section is still generated per-instance in `/etc/zerofs-<name>.toml`, but the binary ignores it. The `zerofs` CLI (e.g. `zerofs monitor`) works fine.
 
 **Problem:**
 The optional `webui` Cargo feature fails to compile in both the stable and unstable nixpkgs packages.
