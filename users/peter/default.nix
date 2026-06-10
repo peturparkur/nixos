@@ -15,18 +15,15 @@
 
   users = {
     defaultUserShell = pkgs.zsh;
-      groups = {
-        peter = {
-          gid = 1000;
-        };
-      };
+    groups = {
+      peter = { };
+    };
     users = {
       root = {
         initialHashedPassword = "$y$j9T$PejWEf9rSNRTZHBUW1OfU1$/kude0HY0CKxFZPdrlcuUupfSKgX1p85oNfxb3Y7C08";
       };
       peter = {
         name = "peter";
-        uid = 1000;
         description = "Peter";
         isNormalUser = true;
         group = "peter";
