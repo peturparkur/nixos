@@ -11,7 +11,10 @@ let
   mountSubmodule = lib.types.submodule {
     options = {
       protocol = lib.mkOption {
-        type = lib.types.enum [ "nfs" "9p" ];
+        type = lib.types.enum [
+          "nfs"
+          "9p"
+        ];
         description = "Network filesystem protocol to use.";
       };
 
@@ -67,6 +70,24 @@ let
         '';
       };
 
+      user = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = ''
+          User name that owns the mount point. For 9P mounts this
+          also automatically adds `uid=` and `gid=` mount options so
+          the filesystem is accessible by that user.
+        '';
+      };
+
+      group = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = ''
+          Group name for the mount point. Defaults to `user` when
+          that option is set.
+        '';
+      };
 
     };
   };
@@ -80,7 +101,8 @@ let
     else
       5564;
 
-  getDevice = mount:
+  getDevice =
+    mount:
     if mount.device != null then
       mount.device
     else if mount.protocol == "nfs" then
@@ -88,14 +110,31 @@ let
     else
       mount.server;
 
-  getDefaultOptions = mount:
-    if mount.protocol == "nfs" then
-      [ "_netdev" "port=${toString (getPort mount)}" ]
+  getDefaultOptions =
+    mount:
+    (if mount.protocol == "nfs" then
+      [
+        "_netdev"
+        "port=${toString (getPort mount)}"
+      ]
     else
-      [ "_netdev" "trans=tcp" "port=${toString (getPort mount)}" ];
+      [
+        "_netdev"
+        "trans=tcp"
+        "port=${toString (getPort mount)}"
+      ])
+    ++ [ "nofail" "x-systemd.mount-timeout=30s" ];
 
-  getAutomountOptions = mount:
-    if mount.automount then [ "noauto" "x-systemd.automount" ] else [ ];
+  getAutomountOptions =
+    mount:
+    if mount.automount then
+      [
+        "noauto"
+        "x-systemd.automount"
+        "x-systemd.idle-timeout=300"
+      ]
+    else
+      [ ];
 
   getAllOptions = mount: (getDefaultOptions mount) ++ mount.options ++ (getAutomountOptions mount);
 
@@ -121,18 +160,38 @@ in
       "9pnet_tcp"
     ];
 
-    # Ensure all mount point directories exist.
+    # Ensure all mount point directories exist and have correct ownership.
+    # Using 'D' instead of 'd' so permissions are fixed on every boot.
     systemd.tmpfiles.rules = lib.mapAttrsToList (
-      _name: mount: "d '${mount.mountPoint}' 0755 root root -"
+      _name: mount:
+      let
+        user = if mount.user != null then mount.user else "root";
+        group = if mount.group != null then mount.group else if mount.user != null then mount.user else "users";
+      in
+      "D '${mount.mountPoint}' 0775 ${user} ${group} -"
     ) cfg.mounts;
 
     # Register each mount in NixOS fileSystems.
     fileSystems = lib.mapAttrs' (
       _name: mount:
+      let
+        userOpts = lib.optionals (mount.user != null && mount.protocol == "9p") (
+          let
+            uid = toString (config.users.users.${mount.user}.uid or 1000);
+            gid = toString (config.users.groups.${if mount.group != null then mount.group else mount.user}.gid or 1000);
+          in
+          [
+            "uid=${uid}"
+            "gid=${gid}"
+            "dfltuid=${uid}"
+            "dfltgid=${gid}"
+          ]
+        );
+      in
       lib.nameValuePair mount.mountPoint {
         device = getDevice mount;
         fsType = mount.protocol;
-        options = getAllOptions mount;
+        options = (getDefaultOptions mount) ++ userOpts ++ mount.options ++ (getAutomountOptions mount);
       }
     ) cfg.mounts;
   };

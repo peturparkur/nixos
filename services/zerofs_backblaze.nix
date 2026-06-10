@@ -16,6 +16,8 @@
       ninep = {
         enable = true;
         addresses = [ "0.0.0.0:5565" ];
+        uid = 1000;
+        gid = 1000;
       };
       nbd = {
         enable = true;

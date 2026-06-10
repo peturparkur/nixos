@@ -43,6 +43,7 @@
           "docker"
           "video"
           "render"
+          "users"
         ];
         # packages = with pkgs; [ ];
 

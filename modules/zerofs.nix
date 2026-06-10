@@ -89,6 +89,16 @@ in
                   default = "/tmp/zerofs.9p.sock";
                   description = "Unix socket path for 9P (null to disable).";
                 };
+                uid = lib.mkOption {
+                  type = lib.types.nullOr lib.types.int;
+                  default = null;
+                  description = "UID to present for all files via 9P (null to use process UID).";
+                };
+                gid = lib.mkOption {
+                  type = lib.types.nullOr lib.types.int;
+                  default = null;
+                  description = "GID to present for all files via 9P (null to use process GID).";
+                };
               };
               nbd = {
                 enable = lib.mkEnableOption "NBD server for ZeroFS";
@@ -312,6 +322,12 @@ in
                 }
                 // lib.optionalAttrs (cfg.servers.ninep.unixSocket != null) {
                   unix_socket = cfg.servers.ninep.unixSocket;
+                }
+                // lib.optionalAttrs (cfg.servers.ninep.uid != null) {
+                  uid = cfg.servers.ninep.uid;
+                }
+                // lib.optionalAttrs (cfg.servers.ninep.gid != null) {
+                  gid = cfg.servers.ninep.gid;
                 }
               );
               nbd = lib.optionalAttrs cfg.servers.nbd.enable (

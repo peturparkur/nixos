@@ -14,7 +14,11 @@
 
     servers = {
       nfs.enable = true;
-      ninep.enable = true;
+      ninep = {
+        enable = true;
+        uid = 1000;
+        gid = 1000;
+      };
       nbd.enable = true;
       rpc.enable = true;
       webui.enable = true;

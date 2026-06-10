@@ -75,20 +75,21 @@
         (
           { ... }:
           {
-            services.virtualFs = {
-              enable = true;
-              mounts.zerofs = {
-                protocol = "9p";
-                server = "192.168.1.50";
-                port = 5564;
-                mountPoint = "/mnt/zerofs";
-                options = [
-                  "version=9p2000.L"
-                  "cache=mmap"
-                  "access=user"
-                ];
-              };
-            };
+                services.virtualFs = {
+                  enable = true;
+                  mounts.zerofs = {
+                    protocol = "9p";
+                    server = "192.168.1.50";
+                    port = 5564;
+                    mountPoint = "/mnt/zerofs";
+                    user = "peter";
+                    group = "peter";
+                    options = [
+                      "version=9p2000.L"
+                      "cache=mmap"
+                    ];
+                  };
+                };
           }
         )
         home-manager.nixosModules.home-manager
@@ -194,10 +195,11 @@
                     # server = "192.168.1.50";
                     port = 5565;
                     mountPoint = "/mnt/backblaze";
+                    user = "peter";
+                    group = "peter";
                     options = [
                       "version=9p2000.L"
                       "cache=mmap"
-                      "access=user"
                     ];
                   };
                 };
