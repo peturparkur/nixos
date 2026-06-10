@@ -190,7 +190,8 @@
                   enable = true;
                   mounts.backblaze = {
                     protocol = "9p";
-                    server = "192.168.1.50";
+                    server = "100.73.160.44"; # tailscale address
+                    # server = "192.168.1.50";
                     port = 5565;
                     mountPoint = "/mnt/backblaze";
                     options = [
