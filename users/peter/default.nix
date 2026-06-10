@@ -16,7 +16,9 @@
   users = {
     defaultUserShell = pkgs.zsh;
     groups = {
-      peter = { };
+      peter = {
+        gid = 1000;
+      };
     };
     users = {
       root = {
@@ -24,6 +26,7 @@
       };
       peter = {
         name = "peter";
+        uid = 1000;
         description = "Peter";
         isNormalUser = true;
         group = "peter";
