@@ -7,7 +7,7 @@
       Resolve = {
         # 1. Primary DNS (your local Technitium servers)
         DNS = [
-          "100.100.100.100" # tailscale
+          # "100.100.100.100" # tailscale
           "1.1.1.1"
           "8.8.8.8"
         ];
@@ -18,11 +18,14 @@
         #   "8.8.8.8"
         # ];
 
-        # 3. The Magic Split Routing Domains
-        # The '~' prefix means route queries matching this domain ONLY to the interfaces/DNS specified
+        # 3. Split routing domains:
+        # REMOVE "~." entirely from this list.
+        # By removing "~.", systemd-resolved uses the global DNS list for all normal traffic.
+        # By leaving ONLY your tailnet domains here, systemd-resolved knows they are the exclusive
+        # exception and routes them directly to Tailscale's D-Bus interface engine.
         Domains = [
+          "~ts.net"
           "~tigris-bee.ts.net"
-          "~."
         ];
       };
     };
@@ -31,6 +34,7 @@
     hostName = "peter-laptop"; # Define your hostname.
     networkmanager.enable = true;
     dhcpcd.enable = false;
+    networkmanager.dns = "systemd-resolved";
 
     # to have access to tailscale magicdns resolver
     search = [
