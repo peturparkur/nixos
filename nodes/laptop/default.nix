@@ -3,10 +3,29 @@
   services.resolved = {
     enable = true;
     settings = {
-      Resolve.FallbackDns = [
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
+      # All systemd-resolved configurations now live inside this structured set
+      Resolve = {
+        # 1. Primary DNS (your local Technitium servers)
+        DNS = [
+          "100.100.100" # tailscale
+          "192.168.0.167"
+          "192.168.0.168"
+        ];
+
+        # 2. True Backup/Fallback DNS
+        FallbackDns = [
+          "1.1.1.1"
+          "8.8.8.8"
+        ];
+
+        # 3. The Magic Split Routing Domains
+        # The '~' prefix means route queries matching this domain ONLY to the interfaces/DNS specified
+        Domains = [
+          "~ts.net"
+          "~tigris-bee.ts.net"
+          "~."
+        ];
+      };
     };
   };
   networking = {
@@ -15,15 +34,18 @@
     dhcpcd.enable = true;
 
     # to have access to tailscale magicdns resolver
-    search = [ "tigris-bee.ts.net" ];
-    networkmanager.insertNameservers = [
-      "100.100.100.100" # tailscale
-      "192.168.0.167" # localdns - technitium-tcp
-      "192.168.0.168" # localdns - technitium-udp
-      "1.1.1.1"
-      "8.8.8.8"
-      "8.8.4.4"
+    search = [
+      "tigris-bee.ts.net"
+      "lan"
     ];
+    # networkmanager.insertNameservers = [
+    #   "100.100.100.100" # tailscale
+    #   "192.168.0.167" # localdns - technitium-tcp
+    #   "192.168.0.168" # localdns - technitium-udp
+    #   "1.1.1.1"
+    #   "8.8.8.8"
+    #   "8.8.4.4"
+    # ];
     # nameservers = [
     #   "1.1.1.1"
     #   "8.8.8.8"
