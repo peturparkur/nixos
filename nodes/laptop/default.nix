@@ -7,21 +7,20 @@
       Resolve = {
         # 1. Primary DNS (your local Technitium servers)
         DNS = [
-          "100.100.100" # tailscale
-          "192.168.0.167"
-          "192.168.0.168"
-        ];
-
-        # 2. True Backup/Fallback DNS
-        FallbackDns = [
+          "100.100.100.100" # tailscale
           "1.1.1.1"
           "8.8.8.8"
         ];
 
+        # 2. True Backup/Fallback DNS
+        # FallbackDns = [
+        #   "1.1.1.1"
+        #   "8.8.8.8"
+        # ];
+
         # 3. The Magic Split Routing Domains
         # The '~' prefix means route queries matching this domain ONLY to the interfaces/DNS specified
         Domains = [
-          "~ts.net"
           "~tigris-bee.ts.net"
           "~."
         ];
@@ -31,7 +30,7 @@
   networking = {
     hostName = "peter-laptop"; # Define your hostname.
     networkmanager.enable = true;
-    dhcpcd.enable = true;
+    dhcpcd.enable = false;
 
     # to have access to tailscale magicdns resolver
     search = [
