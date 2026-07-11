@@ -75,21 +75,21 @@
         (
           { ... }:
           {
-                services.virtualFs = {
-                  enable = true;
-                  mounts.zerofs = {
-                    protocol = "9p";
-                    server = "192.168.1.50";
-                    port = 5564;
-                    mountPoint = "/mnt/zerofs";
-                    user = "peter";
-                    group = "peter";
-                    options = [
-                      "version=9p2000.L"
-                      "cache=mmap"
-                    ];
-                  };
-                };
+            services.virtualFs = {
+              enable = true;
+              mounts.zerofs = {
+                protocol = "9p";
+                server = "192.168.1.50";
+                port = 5564;
+                mountPoint = "/mnt/zerofs";
+                user = "peter";
+                group = "peter";
+                options = [
+                  "version=9p2000.L"
+                  "cache=mmap"
+                ];
+              };
+            };
           }
         )
         home-manager.nixosModules.home-manager
@@ -145,7 +145,7 @@
               {
                 services.zerofs.garage = {
                   enable = true;
-                  cache.memorySizeGb = 8.0;
+                  cache.memorySizeGb = 4.0;
                   cache.diskSizeGb = 10.0;
                 };
                 services.zerofs.backblaze = {
