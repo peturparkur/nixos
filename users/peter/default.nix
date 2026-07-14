@@ -44,6 +44,7 @@
           "video"
           "render"
           "users"
+          "zerofs"
         ];
         # packages = with pkgs; [ ];
 
