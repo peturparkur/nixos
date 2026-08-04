@@ -125,7 +125,7 @@
 
     # k3s management
     kubernetes-helm
-    garage-webui
+    # garage-webui # unmaintained
 
     # browsers - web
     firefox

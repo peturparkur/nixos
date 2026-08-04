@@ -176,12 +176,14 @@
             ./nodes/laptop
             ./modules/grub.nix
             (
-              { pkgs, ... }:
+              { pkgs, lib, ... }:
               let
                 user_pkgs = import ./users/extra_packages.nix { inherit pkgs; };
               in
               {
-                config = { } // user_pkgs.enable_additional_user_packages "peter";
+                config = lib.mkMerge [
+                  (user_pkgs.enable_additional_user_packages "peter")
+                ];
               }
             )
             (
