@@ -30,6 +30,10 @@
       };
     };
   };
+  boot.tmp = {
+    useTmpfs = true;
+    tmpfsSize = "50%";
+  };
   networking = {
     hostName = "peter-laptop"; # Define your hostname.
     networkmanager.enable = true;
