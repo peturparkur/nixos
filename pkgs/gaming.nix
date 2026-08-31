@@ -28,4 +28,15 @@
     wine64 # gaming
     umu-launcher
   ];
+
+  # COD 4 server
+  networking.firewall = {
+    allowedTCPPorts = [
+      28960
+    ];
+    allowedUDPPorts = [
+      28960
+    ];
+  };
+
 }
