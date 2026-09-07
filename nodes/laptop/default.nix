@@ -35,6 +35,7 @@
     tmpfsSize = "50%";
   };
   networking = {
+    firewall.enable = true;
     hostName = "peter-laptop"; # Define your hostname.
     networkmanager.enable = true;
     dhcpcd.enable = false;
