@@ -168,6 +168,9 @@
     # tooling for lsps or some apps
     nodejs_24
 
+    # environment sandboxing
+    bubblewrap
+
     awscli2 # aws cli for s3 usage
 
     zerofs # CLI for ZeroFS
