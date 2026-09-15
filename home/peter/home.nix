@@ -13,6 +13,11 @@ in
   home = {
     stateVersion = "24.11";
     packages = with pkgs; [ zsh-powerlevel10k ];
+
+    # User-local tooling directory. Binaries dropped into ~/.local/bin are
+    # picked up on PATH but are NOT managed by NixOS: they may be replaced or
+    # deleted freely, independent of system rebuilds.
+    sessionPath = [ "$HOME/.local/bin" ];
   };
 
   # special programs setup

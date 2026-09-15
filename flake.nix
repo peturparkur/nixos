@@ -213,7 +213,9 @@
                 { ... }:
                 {
                   imports = [
-                    ./home/peter/home.nix
+                    # home.nix already comes from baseModules; importing it
+                    # again would merge every list option (e.g. PATH/sessionPath)
+                    # twice.
                     ./home/peter/programs/vscode.nix
                     ./home/services/megasync.nix
                   ];
