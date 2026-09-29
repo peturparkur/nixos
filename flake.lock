@@ -446,6 +446,21 @@
         "type": "github"
       }
     },
+    "nix-filter": {
+      "locked": {
+        "lastModified": 1693833173,
+        "narHash": "sha256-hlMABKrGbEiJD5dwUSfnw1CQ3bG7KKwDV+Nx3bEZd7U=",
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "rev": "ac030bd9ba98e318e1f4c4328d60766ade8ebe8b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "type": "github"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -593,7 +608,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-next": "nixpkgs-next",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "split-monitor-workspaces": "split-monitor-workspaces"
       }
     },
     "sops-nix": {
@@ -613,6 +629,28 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "split-monitor-workspaces": {
+      "inputs": {
+        "hyprland": [
+          "hyprland"
+        ],
+        "nix-filter": "nix-filter"
+      },
+      "locked": {
+        "lastModified": 1782230079,
+        "narHash": "sha256-AIg6hxip9hP6XWIqpjQOIripCdJQvtKSEubV+qL8mF8=",
+        "owner": "zjeffer",
+        "repo": "split-monitor-workspaces",
+        "rev": "d6b45cdb9b30c388bc4ded4adad78a14e523d591",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zjeffer",
+        "ref": "release/0.55.x",
+        "repo": "split-monitor-workspaces",
         "type": "github"
       }
     },

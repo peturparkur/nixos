@@ -24,7 +24,37 @@ in
   programs.fzf.enable = true;
   programs.zoxide.enable = true;
   programs.direnv.enable = true;
-  programs.kitty.shellIntegration.enableZshIntegration = true;
+  # Kitty is installed as a system package; this block only generates
+  # ~/.config/kitty/kitty.conf with the shortcuts below.
+  #
+  # Modifier policy for this setup:
+  #   Ctrl+H / Ctrl+L   Neovim split navigation
+  #   Ctrl+Shift+...    Kitty defaults (new tab, close tab, layouts, ...)
+  #   Super+...         Hyprland (compositor) shortcuts
+  #
+  # Tab navigation mirrors Neovim's window navigation.  Note that mapping
+  # Ctrl+H/Ctrl+L in kitty means the running program (zsh, fzf, ...) no longer
+  # receives them, so readline backspace-word (Ctrl+H) is shadowed here.
+  programs.kitty = {
+    enable = true;
+    shellIntegration.enableZshIntegration = true;
+    keybindings = {
+      # Neovim-style tab movement: left = previous, right = next.
+      "ctrl+h" = "prev_tab";
+      "ctrl+l" = "next_tab";
+
+      # Direct tab selection, 1-based and matching the tab bar labels.
+      "ctrl+alt+1" = "goto_tab 1";
+      "ctrl+alt+2" = "goto_tab 2";
+      "ctrl+alt+3" = "goto_tab 3";
+      "ctrl+alt+4" = "goto_tab 4";
+      "ctrl+alt+5" = "goto_tab 5";
+      "ctrl+alt+6" = "goto_tab 6";
+      "ctrl+alt+7" = "goto_tab 7";
+      "ctrl+alt+8" = "goto_tab 8";
+      "ctrl+alt+9" = "goto_tab 9";
+    };
+  };
   programs.zsh = {
     enable = true;
     enableCompletion = true;

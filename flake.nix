@@ -9,7 +9,11 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland"; # display manager - NOT USED
+    hyprland.url = "github:hyprwm/Hyprland";
+    split-monitor-workspaces = {
+      url = "github:zjeffer/split-monitor-workspaces/release/0.55.x";
+      inputs.hyprland.follows = "hyprland";
+    };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     sops-nix = {
       # secrets management - SOPS
@@ -96,6 +100,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.users.peter = import ./home/peter/home.nix;
           home-manager.sharedModules = [ inputs.sops-nix.homeManagerModules.sops ];
         }
@@ -217,6 +222,7 @@
                     # again would merge every list option (e.g. PATH/sessionPath)
                     # twice.
                     ./home/peter/programs/vscode.nix
+                    ./home/peter/programs/hyprland.nix
                     ./home/services/megasync.nix
                   ];
                 };

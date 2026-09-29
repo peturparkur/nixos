@@ -89,6 +89,10 @@
     ../../pkgs/fonts.nix
   ];
 
+  # Keep GNOME available as a fallback in GDM, but make the configured
+  # Hyprland session the default for this laptop.
+  services.displayManager.defaultSession = "hyprland";
+
   # system.stateVersion = "unstable";
   # system.stateVersion = "24.11";
 
@@ -124,6 +128,8 @@
     lshw
     git
     neovim
+    delta
+    difftastic
     claude-code
     jq # json query - cli processor
     s5cmd # s3 cli
