@@ -24,9 +24,6 @@ in
   programs.fzf.enable = true;
   programs.zoxide.enable = true;
   programs.direnv.enable = true;
-  # Kitty is installed as a system package; this block only generates
-  # ~/.config/kitty/kitty.conf with the shortcuts below.
-  #
   # Modifier policy for this setup:
   #   Ctrl+H / Ctrl+L   Neovim split navigation
   #   Ctrl+Shift+...    Kitty defaults (new tab, close tab, layouts, ...)

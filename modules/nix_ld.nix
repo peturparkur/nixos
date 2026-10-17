@@ -9,6 +9,7 @@ in
   };
   # programs.nix-ld.libraries = (pkgs.steam-run.args.multiPkgs pkgs)
   #   ++ [ pkgs.stdenv.cc.cc pkgs.zlib pkgs.libgcc pkgs.umu-launcher];
+  # Keep commented libraries as optional compatibility additions; current laptop usage does not need them.
   programs.nix-ld.libraries =
     with pkgs;
     [

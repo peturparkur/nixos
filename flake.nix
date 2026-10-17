@@ -1,8 +1,8 @@
 {
   description = "NixOS configuration for x86 home nodes";
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # unstable branch -> most up-to-date
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05"; # stable branch -> should never crash
+    # Prefer the better-tested stable release unless a newer application version is needed.
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-next.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       # manages user specific programs and settings via nixos declarative setup

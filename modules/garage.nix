@@ -10,7 +10,7 @@
 let
   nodeIp = networkTopology.${config.networking.hostName};
   otherNodeNames = lib.filter (name: name != config.networking.hostName) (lib.attrNames garageNodes);
-  # peers should be taken from garage CLI output of `garage node id`
+  # Legacy automatic peering attempt; entries are outdated. Peers are now connected manually via the garage CLI.
   bootstrapPeers = map (
     name: "${garageNodes.${name}}@${networkTopology.${name}}:3901"
   ) otherNodeNames;

@@ -5,7 +5,7 @@
     settings = {
       # All systemd-resolved configurations now live inside this structured set
       Resolve = {
-        # 1. Primary DNS (your local Technitium servers)
+        # Prefer Cloudflare and Google DNS; local Technitium is no longer used.
         DNS = [
           # "100.100.100.100" # tailscale
           "1.1.1.1"
