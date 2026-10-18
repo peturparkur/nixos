@@ -25,20 +25,19 @@ in
   programs.zoxide.enable = true;
   programs.direnv.enable = true;
   # Modifier policy for this setup:
-  #   Ctrl+H / Ctrl+L   Neovim split navigation
+  #   Ctrl+H / Ctrl+L   Neovim split navigation / ToggleTerm cycling
+  #   Ctrl+Alt+H / L    Kitty tab navigation
   #   Ctrl+Shift+...    Kitty defaults (new tab, close tab, layouts, ...)
   #   Super+...         Hyprland (compositor) shortcuts
   #
-  # Tab navigation mirrors Neovim's window navigation.  Note that mapping
-  # Ctrl+H/Ctrl+L in kitty means the running program (zsh, fzf, ...) no longer
-  # receives them, so readline backspace-word (Ctrl+H) is shadowed here.
+  # Keep Ctrl+H/Ctrl+L available to applications; add Alt for Kitty tabs.
   programs.kitty = {
     enable = true;
     shellIntegration.enableZshIntegration = true;
     keybindings = {
       # Neovim-style tab movement: left = previous, right = next.
-      "ctrl+h" = "prev_tab";
-      "ctrl+l" = "next_tab";
+      "ctrl+alt+h" = "prev_tab";
+      "ctrl+alt+l" = "next_tab";
 
       # Direct tab selection, 1-based and matching the tab bar labels.
       "ctrl+alt+1" = "goto_tab 1";
