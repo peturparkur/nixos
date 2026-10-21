@@ -442,6 +442,16 @@ in
     extraConfig = "source = ~/.config/hypr/monitors.conf";
   };
 
+  xdg.desktopEntries.sound-settings = {
+    name = "Sound Settings";
+    comment = "Adjust input and output volume and select audio devices";
+    exec = "${pkgs.pavucontrol}/bin/pavucontrol";
+    icon = "multimedia-volume-control";
+    terminal = false;
+    categories = [ "Settings" "AudioVideo" "Audio" ];
+    settings.Keywords = "sound;audio;volume;microphone;speakers;headphones;";
+  };
+
   # Wofi and other application launchers discover this .desktop entry.  It
   # leaves the normal Steam launcher untouched and makes the tested AMD-iGPU
   # path explicit.
