@@ -146,18 +146,17 @@
             ./services/zerofs.nix
             ./services/zerofs_backblaze.nix
             (
-              { ... }:
+              { pkgs, ... }:
               {
-                services.zerofs.garage = {
-                  enable = true;
-                  cache.memorySizeGb = 4.0;
-                  cache.diskSizeGb = 10.0;
-                };
                 services.zerofs.backblaze = {
                   enable = true;
                   cache.memorySizeGb = 2.0;
                   cache.diskSizeGb = 2.0;
                 };
+                environment.systemPackages = [
+                  pkgs.tmux
+                ];
+                imports = [ ./modules/programming_languages.nix ];
 
                 # this would allocate more RAM to iGPU
                 # boot.kernelParams = [
