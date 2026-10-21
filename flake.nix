@@ -150,7 +150,7 @@
               { pkgs, ... }:
               {
                 services.zerofs.backblaze = {
-                  enable = true;
+                  enable = false;
                   cache.memorySizeGb = 2.0;
                   cache.diskSizeGb = 2.0;
                 };
