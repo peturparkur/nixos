@@ -122,6 +122,7 @@
             specialArgs = {
               inherit inputs self;
               inherit networkTopology garageNodes tailscaleNodes;
+              inherit pkgs_next;
               nodeName = nodename;
             };
             modules = [ ./nodes/${nodename} ] ++ extraModules;
