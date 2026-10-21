@@ -43,16 +43,18 @@
     secretAccessKeyFile = config.sops.secrets."zerofs/secret-access-key".path;
   };
 
-  sops.secrets."zerofs/password" = {
-    owner = "zerofs";
-    group = "zerofs";
-  };
-  sops.secrets."zerofs/access-key-id" = {
-    owner = "zerofs";
-    group = "zerofs";
-  };
-  sops.secrets."zerofs/secret-access-key" = {
-    owner = "zerofs";
-    group = "zerofs";
+  sops.secrets = lib.mkIf config.services.zerofs.garage.enable {
+    "zerofs/password" = {
+      owner = "zerofs";
+      group = "zerofs";
+    };
+    "zerofs/access-key-id" = {
+      owner = "zerofs";
+      group = "zerofs";
+    };
+    "zerofs/secret-access-key" = {
+      owner = "zerofs";
+      group = "zerofs";
+    };
   };
 }

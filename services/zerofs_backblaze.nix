@@ -52,16 +52,18 @@
     secretAccessKeyFile = config.sops.secrets."backblaze/secret-access-key".path;
   };
 
-  sops.secrets."backblaze/password" = {
-    owner = "zerofs";
-    group = "zerofs";
-  };
-  sops.secrets."backblaze/access-key-id" = {
-    owner = "zerofs";
-    group = "zerofs";
-  };
-  sops.secrets."backblaze/secret-access-key" = {
-    owner = "zerofs";
-    group = "zerofs";
+  sops.secrets = lib.mkIf config.services.zerofs.backblaze.enable {
+    "backblaze/password" = {
+      owner = "zerofs";
+      group = "zerofs";
+    };
+    "backblaze/access-key-id" = {
+      owner = "zerofs";
+      group = "zerofs";
+    };
+    "backblaze/secret-access-key" = {
+      owner = "zerofs";
+      group = "zerofs";
+    };
   };
 }
