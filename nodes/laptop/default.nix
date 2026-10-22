@@ -148,7 +148,6 @@
     unzip
     p7zip
     zstd
-    zstd
 
     # networking
     mtr

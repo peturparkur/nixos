@@ -81,6 +81,13 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    fd # better find
+    direnv
+    wget
+    curl
+    ripgrep
+    jq # json query - cli processor
+
     # usual must have tools
     git
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -100,7 +107,6 @@
     unzip
     p7zip
     zstd
-    zstd
 
     # networking
     mtr
@@ -119,6 +125,12 @@
     # hardware testing
     memtester # testing RAM
     nvme-cli # nvme drive utility
+
+    # environment sandboxing
+    bubblewrap
+
+    # tooling for lsps or some apps
+    nodejs_24
   ];
 
   environment.variables.EDITOR = "nvim";
