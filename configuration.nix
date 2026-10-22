@@ -131,6 +131,11 @@
 
     # tooling for lsps or some apps
     nodejs_24
+
+    # other build tooling
+    gcc
+    gnumake
+    pkg-config
   ];
 
   environment.variables.EDITOR = "nvim";
