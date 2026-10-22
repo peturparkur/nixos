@@ -11,7 +11,7 @@ in
   # The home.stateVersion option does not have a default and must be set
   # Here goes the rest of your home-manager config, e.g. home.packages = [ pkgs.foo ];
   home = {
-    stateVersion = "24.11";
+    stateVersion = "26.05";
     packages = with pkgs; [ zsh-powerlevel10k ];
 
     # User-local tooling directory. Binaries dropped into ~/.local/bin are
