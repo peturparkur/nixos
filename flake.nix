@@ -67,6 +67,7 @@
         ./modules/zerofs.nix
         ./modules/virtual-filesystem.nix
         ./modules/network-hosts.nix
+        ./modules/nix-cache-client.nix
         sops-nix.nixosModules.sops
         (
           { ... }:
@@ -144,8 +145,7 @@
           ++ [
             ./modules/amd_graphics.nix
             ./modules/garage.nix
-            ./services/zerofs.nix
-            ./services/zerofs_backblaze.nix
+            ./services/nix-cache.nix
             (
               { pkgs, ... }:
               {
