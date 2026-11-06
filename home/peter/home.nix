@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    ./programs/rclone.nix
     # Include the results of the hardware scan.
     # ./files/kubeconfig.nix
   ];

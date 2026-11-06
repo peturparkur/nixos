@@ -1,10 +1,12 @@
 # Known Build Issues
 
-This document tracks upstream build issues we have hit in this NixOS configuration.
+This document records upstream build issues encountered in this NixOS configuration.
+The ZeroFS-related entries below are historical: ZeroFS has been removed, and they
+are not current deployment instructions or runtime-health claims.
 
 ## dragonflydb
 
-**Status:** Reverted to Redis. A commented-out configuration is preserved in `modules/zerofs.nix`.
+**Status:** Historical. Redis was used instead; the ZeroFS module and its experimental configuration have since been removed.
 
 **Problem:**
 The `dragonflydb` package in `nixos-26.05` fails to build from source with a hash mismatch followed by a patch failure.
@@ -28,13 +30,13 @@ Hunk #1 FAILED at 28.
 
 **Impact:**
 - The `dragonflydb` binary cannot be produced from the current `nixos-26.05` package definition.
-- Awaiting an upstream nixpkgs fix before it can be re-enabled.
+- This no longer blocks the configuration because the ZeroFS deployment has been removed.
 
 ---
 
 ## zerofs (webui feature)
 
-**Status:** Stable `zerofs` (1.1.7) is used without the `webui` feature. The `[servers.webui]` config section is still generated per-instance in `/etc/zerofs-<name>.toml`, but the binary ignores it. The `zerofs` CLI (e.g. `zerofs monitor`) works fine.
+**Status:** Historical. The former deployment used the stable binary without the `webui` feature. ZeroFS and its generated configuration have since been removed.
 
 **Problem:**
 The optional `webui` Cargo feature fails to compile in both the stable and unstable nixpkgs packages.
@@ -56,7 +58,6 @@ error[E0599]: no method named `get` found for struct ...
 **Root Cause:**
 The upstream `webui` feature code is incompatible with the dependency versions provided by nixpkgs (specifically a missing `.get()` trait implementation). This is an upstream source bug, not a packaging issue.
 
-**Impact:**
-- The embedded Web UI on port 8080 is unavailable.
-- All other zerofs functionality (NFS, 9P, NBD, RPC, `zerofs monitor`) works correctly using the stable binary.
-- Awaiting a future upstream release where the `webui` feature compiles cleanly.
+**Impact at the time:**
+- The optional embedded Web UI could not be built.
+- This no longer blocks the configuration. ZeroFS was later retired because of restart/power-loss reliability problems; successful compilation did not establish storage reliability.

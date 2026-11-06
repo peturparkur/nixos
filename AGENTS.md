@@ -36,7 +36,7 @@ Keep how-to instructions in the README; reference them here rather than duplicat
 - [Rebuild and update](README.md#rebuild-and-update): applying configuration and updating dependencies.
 - [Secrets](README.md#secrets): age-key prerequisites, editing secrets, and updating recipients.
 - [Reconfiguring Powerlevel10k](README.md#reconfiguring-powerlevel10k): regenerating the shell prompt configuration.
-- [Storage status and planned migration](README.md#storage-status-and-planned-migration): read before changing storage; see [Garage](README.md#garage) and [ZeroFS](README.md#zerofs) for operational context.
+- [Storage status and planned migration](README.md#storage-status-and-planned-migration): read before changing storage; see [Garage](README.md#garage) and [object-store mounts](README.md#object-store-mounts) for operational context.
 
 ## Editing guidance
 

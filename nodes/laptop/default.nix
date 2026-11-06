@@ -177,7 +177,5 @@
     bubblewrap
 
     awscli2 # aws cli for s3 usage
-
-    zerofs # CLI for ZeroFS
   ];
 }

@@ -64,10 +64,9 @@
         ./modules/experimental_features.nix
         ./pkgs/tailscale.nix
         ./users/peter
-        ./modules/zerofs.nix
-        ./modules/virtual-filesystem.nix
         ./modules/network-hosts.nix
         ./modules/nix-cache-client.nix
+        ./modules/rclone-mounts.nix
         sops-nix.nixosModules.sops
         (
           { ... }:
@@ -75,26 +74,6 @@
             sops.defaultSopsFile = ./secrets/secrets.yaml;
             sops.defaultSopsFormat = "yaml";
             sops.age.keyFile = "/home/peter/.config/sops/age/keys.txt";
-          }
-        )
-        (
-          { ... }:
-          {
-            services.virtualFs = {
-              enable = true;
-              mounts.zerofs = {
-                protocol = "9p";
-                server = "192.168.1.50";
-                port = 5564;
-                mountPoint = "/mnt/zerofs";
-                user = "peter";
-                group = "peter";
-                options = [
-                  "version=9p2000.L"
-                  "cache=mmap"
-                ];
-              };
-            };
           }
         )
         home-manager.nixosModules.home-manager
@@ -184,27 +163,6 @@
                 config = lib.mkMerge [
                   (user_pkgs.enable_additional_user_packages "peter")
                 ];
-              }
-            )
-            (
-              { ... }:
-              {
-                services.virtualFs = {
-                  enable = true;
-                  mounts.backblaze = {
-                    protocol = "9p";
-                    server = "100.73.160.44"; # tailscale address
-                    # server = "192.168.1.50";
-                    port = 5565;
-                    mountPoint = "/mnt/backblaze";
-                    user = "peter";
-                    group = "peter";
-                    options = [
-                      "version=9p2000.L"
-                      "cache=mmap"
-                    ];
-                  };
-                };
               }
             )
             home-manager.nixosModules.home-manager
