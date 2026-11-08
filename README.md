@@ -19,6 +19,7 @@ The cluster's addresses, legacy Garage bootstrap peer entries, and per-node modu
 - **Common OS baseline:** [`configuration.nix`](configuration.nix) contains shared system defaults, locale/time zone imports, and command-line tools. [`networking.nix`](networking.nix) adds cluster networking and SSH.
 - **Cluster services:** [`kubes/k3s.nix`](kubes/k3s.nix) configures K3s; [`kubes/longhorn.nix`](kubes/longhorn.nix) adds Longhorn prerequisites. [`modules/nats.nix`](modules/nats.nix) configures the NATS cluster.
 - **Shared Nix cache:** [`services/nix-cache.nix`](services/nix-cache.nix) configures the Nginx read-through proxy and Attic server. See [setup and publication](#shared-nix-cache) before deploying.
+- **Shared workspace:** [`services/shared-workspace.nix`](services/shared-workspace.nix) provides the NFS workspace and on-demand clients. See [the shared workspace guide](docs/shared-workspace.md) for storage, deployment, and offline behavior.
 - **Object and network storage:** [`modules/garage.nix`](modules/garage.nix) configures Garage. [`modules/virtual-filesystem.nix`](modules/virtual-filesystem.nix) is a retained NFS/9P client helper, not currently imported. Home Manager object-store mounts are configured in [`home/peter/programs/rclone.nix`](home/peter/programs/rclone.nix), with NixOS integration in [`modules/rclone-mounts.nix`](modules/rclone-mounts.nix). See [object-store mounts](#object-store-mounts) for provisioning and the storage status below for current usage.
 - **Laptop desktop and hardware:** [`nodes/laptop/default.nix`](nodes/laptop/default.nix) assembles the laptop's desktop, networking, VPN, sync, and workstation modules. Relevant module definitions include [`modules/gnome_desktop.nix`](modules/gnome_desktop.nix), [`modules/hyprland.nix`](modules/hyprland.nix), [`modules/nvidia.nix`](modules/nvidia.nix), and [`modules/programming_languages.nix`](modules/programming_languages.nix).
 - **User environment:** [`users/peter/`](users/peter/) defines the account and shell; [`home/peter/home.nix`](home/peter/home.nix) and [`home/peter/programs/`](home/peter/programs/) hold Home Manager settings. Shell dotfiles are in [`home/dotfiles/`](home/dotfiles/).
@@ -37,6 +38,20 @@ Garage currently runs in two separate deployments:
 The planned migration is to move that data to native Garage, then remove the Garage workload from K3s. Kubernetes should retain only Service/load-balancer exposure of the native deployment, with native node IPs centralized in that service definition rather than hardcoded throughout consuming workloads. **This migration is not complete.**
 
 [`docs/deploying-garage.md`](docs/deploying-garage.md) contains useful deployment notes but describes a different three-node setup. Check the current flake and the status above before following it verbatim.
+
+## Shared workspace
+
+`amdmini-1` exports `/mnt/shared` over NFSv4 for frequently accessed files and
+development artifacts. Its files live in `/mnt/data/shared` on the data NVMe,
+with no quota or reserved capacity. The other cluster nodes and laptop mount it
+on demand; boot and login do not require the server to be reachable.
+
+This is a trusted-LAN workspace, not replicated storage or an offline-synchronized
+folder. I/O on an already-mounted share can wait if the server disappears. Keep
+important artifacts backed up separately. Garage and Backblaze mounts are unchanged.
+
+See [the shared workspace guide](docs/shared-workspace.md) for backing storage,
+deployment, permissions, disk usage, offline behavior, and checks.
 
 ## Object-store mounts
 

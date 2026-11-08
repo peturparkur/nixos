@@ -59,6 +59,7 @@
       };
 
       baseModules = [
+        ./services/shared-workspace.nix
         ./configuration.nix
         ./modules/docker.nix
         ./modules/experimental_features.nix

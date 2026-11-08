@@ -26,15 +26,21 @@ Personal NixOS system configuration for a laptop and a home cluster, including u
 | `kernel/` | Optional kernel-selection modules; check imports before assuming one is used. |
 | `secrets/`, `.sops.yaml` | Encrypted SOPS data and recipient rules; shared integration is in `flake.nix`. Never commit decrypted secrets or private keys. |
 | `justfile` | Local rebuild and dependency-update shortcuts. |
-| `README.md` | Human-facing navigation, workflows, and operational caveats, including storage usage and migration intent. |
-| `docs/`, `issues.md` | Deployment background and troubleshooting notes; verify examples and outstanding issues against current code before acting. |
+| `README.md` | Repository overview, navigation, essential operational caveats, and links to detailed guides. |
+| `docs/` | Detailed service-specific setup, operation, troubleshooting, and deployment background; verify examples against current code before acting. |
+| `issues.md` | Outstanding issues and troubleshooting notes; verify their status against current code before acting. |
 
 ## Workflows and operational context
 
-Keep how-to instructions in the README; reference them here rather than duplicating commands or procedures:
+Keep the README a general summary of the repository with links to further information.
+Put detailed service-specific setup, operation, and troubleshooting instructions in
+focused Markdown files under `docs/`, linked from the README. Short repository-wide
+workflows may remain in the README. Reference those documents here rather than
+duplicating commands or procedures:
 
 - [Rebuild and update](README.md#rebuild-and-update): applying configuration and updating dependencies.
 - [Secrets](README.md#secrets): age-key prerequisites, editing secrets, and updating recipients.
+- [Shared workspace](docs/shared-workspace.md): NFS deployment, storage, and offline behavior.
 - [Reconfiguring Powerlevel10k](README.md#reconfiguring-powerlevel10k): regenerating the shell prompt configuration.
 - [Storage status and planned migration](README.md#storage-status-and-planned-migration): read before changing storage; see [Garage](README.md#garage) and [object-store mounts](README.md#object-store-mounts) for operational context.
 
