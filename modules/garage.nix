@@ -51,8 +51,12 @@ in
         }
       ];
       replication_factor = 2;
-      compression_level = 12;
-      block_size = "10M";
+      compression_level = 1;
+      block_size = "4MiB";
+      block_max_concurrent_writes_per_request = 10;
+      block_max_concurrent_reads = 32;
+      # Retain the default backpressure budget, not a cache or total memory limit.
+      block_ram_buffer_max = "256MiB";
       rpc_bind_addr = "[::]:3901";
       rpc_public_addr = "${nodeIp}:3901";
       rpc_secret_file = config.sops.secrets."garage/rpc-secret".path;
